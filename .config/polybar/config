@@ -1,0 +1,343 @@
+
+[colors]
+;background = ${xrdb:color0:#222}
+background = #003535
+background-alt = #004040
+;foreground = ${xrdb:color7:#222}
+foreground = #FEFEFE
+foreground-alt = #555
+primary = #009090
+secondary = #e60053
+alert = #bd2c40
+
+polygradient-0 = #006666
+polygradient-1 = #008080
+polygradient-2 = #66b2b2
+
+polypwr-f = ${colors.background}
+polypwr-b = #FF9302
+
+poly-f 	 = #FEFEFE
+polyws-f = #008080
+polyws-b = #FFCDDA
+
+[bar/example]
+monitor = ${env:MONITOR:}
+width = 100%
+height = 35
+fixed-center = false
+
+modules-left = i3 rpow xwindow
+modules-center = 
+modules-right = cmus spotify  pulseaudio memory cpu eth date powermenu
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+font-0 = fixed:pixelsize=12;3
+font-1 = unifont:fontformat=truetype:size=20:antialias=true;4
+font-2 = "3270Medium Nerd Font:style=Medium:size=22;4"
+font-3 = "3270Medium Nerd Font:style=Medium:size=26;5"
+
+tray-position = hidden
+tray-padding = 10
+
+wm-restack = i3
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+[module/xwindow]
+type = internal/xwindow
+label = "  %title:0:30:...%"
+format-underline = #FFF
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+format-prefix = "DSK: "
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %used%(%percentage_used%%) used, %free% free
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+format-prefix = "  "
+
+format-background = ${colors.polyws-b}
+format-foreground = ${colors.polyws-f}
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.polyws-f}
+label-mode-background = ${colors.polyws-b}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.polyws-b}
+label-focused-underline = ${colors.polyws-f}
+label-focused-padding = 2
+label-focused-foreground = ${colors.polyws-f}
+ 
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-foreground = ${colors.polyws-f}
+label-unfocused-background = ${colors.polyws-b}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${colors.polyws-b}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+label-visible-foreground = ${colors.polyws-f}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = %{T3}%{T-}  
+label-separator-foreground = ${colors.polyws-f}
+label-separator-background = ${colors.polyws-b}
+
+; Ending right powerline glyph on workspaces section
+[module/rpow]
+type = custom/text
+content = %{T4} %{T-}
+content-foreground = ${colors.polyws-b}
+
+
+
+[module/cmus]
+type = custom/script
+
+exec = sh ~/.config/polybar/cmus.sh
+exec-if = pgrep -x cmus
+interval = 1
+
+click-left = cmus-remote --next
+click-right = cmus-remote --prev
+click-middle = cmus-remote --pause
+scroll-up = cmus-remote --volume +5%
+scroll-down = cmus-remote --volume -5%
+
+format =   <label>
+format-underline = #00FF00
+label =  %output%
+label-maxlen = 56
+
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = " "
+format = <label>
+exec = python /home/kios/.config/polybar/spotify_status.py -f '  {artist}: {song}  '
+format-underline = #1db954
+
+
+[module/mpd]
+type = internal/mpd
+format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+
+host = 127.0.0.1
+port = 6601
+
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+
+format-underline = #00FF00
+
+label-song =  🎜 %artist% - %title%
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+
+[module/cpu]
+format-prefix = %{T3} %{T-}  
+format-prefix-foreground = ${colors.polygradient-1}
+format-prefix-background = ${colors.polygradient-2}
+format-background = ${colors.polygradient-2}
+
+type = internal/cpu
+interval = 2
+label = " CPU: %percentage:2%%"
+
+
+[module/memory]
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = ${colors.polygradient-2}
+format-prefix-background = ${colors.background}
+format-background = ${colors.polygradient-2}
+
+type = internal/memory
+interval = 2
+label = " RAM: %percentage_used%%"
+
+
+[module/eth]
+format-connected-prefix = %{T4} %{T-}  
+format-connected-prefix-foreground = ${colors.polygradient-1}
+format-connected-prefix-background = ${colors.polygradient-2}
+format-connected-background = ${colors.polygradient-1}
+
+type = internal/network
+interface = enp0s31f6
+interval = 3.0
+label-connected = "  : %local_ip%"
+format-disconnected =
+
+
+[module/date]
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = ${colors.polygradient-0}
+format-prefix-background = ${colors.polygradient-1}
+format-background = ${colors.polygradient-0}
+
+type = internal/date
+interval = 5
+date = "%d/%m/%Y"
+date-alt = " %Y-%m-%d"
+time = %H:%M
+time-alt = %H:%M:%S
+label = "   %time% %date%"
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+format-muted-prefix = " "
+format-muted-foreground = ${colors.foreground-alt}
+label-muted = sound muted
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground-alt}
+
+
+[module/powermenu]
+format-prefix-background = ${colors.polygradient-0}
+format-prefix-foreground = ${colors.polypwr-b}
+format-background = ${colors.polypwr-b}
+format-foreground = ${colors.polypwr-f}
+format-prefix =  %{T4} %{T-}  
+
+type = custom/menu
+expand-right = true
+format-spacing = 1
+
+label-open = "    "
+label-open-foreground = ${colors.polypwr-f}
+label-close = "   "
+label-close-foreground = ${colors.polypwr-f}
+label-separator = |
+label-separator-foreground = ${colors.polypwr-f}
+
+menu-0-0 =  "  "
+menu-0-0-exec = menu-open-1
+menu-0-1 ="  "
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = "   "
+menu-1-0-exec = reboot
+
+menu-2-0 = "  "
+menu-2-0-exec = shutdown now
+
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = false
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
