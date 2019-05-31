@@ -2,7 +2,7 @@
 My dotfiles
 Currently cleaning up i3 configs.
 
-[Screenshot](https://i.imgur.com/mnwIXeu.jpg)
+![Screenshot](https://i.imgur.com/mnwIXeu.jpg)
 
 Programs:
 - WM: i3-gaps
