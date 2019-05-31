@@ -15,6 +15,7 @@ autocmd FileType javascript set local equalprg=js-beautify\ --stdin
 
 set nocompatible              " required
 filetype off                  " required
+filetype plugin on
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -25,6 +26,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
+Plugin 'suan/vim-instant-markdown', {'rtp':'after'}
 
 
 
