@@ -29,7 +29,7 @@ fixed-center = false
 
 modules-left = i3 rpow xwindow
 modules-center = 
-modules-right = cmus spotify  pulseaudio memory cpu eth date powermenu
+modules-right = cmus musikcube spotify  pulseaudio memory cpu eth date powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -145,6 +145,15 @@ format-underline = #00FF00
 label =  %output%
 label-maxlen = 56
 
+[module/musikcube]
+type = custom/script
+
+interval = 1
+exec = python ~/.config/polybar/musikcube.py
+exec-if = pgrep -x musikcube
+label = "%output% "
+label-maxlen = 56
+format-underline = #FFFFFF
 
 [module/spotify]
 type = custom/script
