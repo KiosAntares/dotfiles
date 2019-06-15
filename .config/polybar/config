@@ -140,28 +140,44 @@ click-middle = cmus-remote --pause
 scroll-up = cmus-remote --volume +5%
 scroll-down = cmus-remote --volume -5%
 
+format-background = #1db954
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = #1db954
+format-prefix-background = ${colors.background}
+format-suffix = %{T4} %{T-}  
+format-suffix-foreground = ${colors.background}
+
 format =   <label>
-format-underline = #00FF00
 label =  %output%
 label-maxlen = 56
 
 [module/musikcube]
 type = custom/script
+format-background = #AFD704
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = #AFD704
+format-prefix-background = ${colors.background}
+format-suffix = %{T4} %{T-}  
+format-suffix-foreground = ${colors.background}
 
 interval = 1
 exec = python ~/.config/polybar/musikcube.py
 exec-if = pgrep -x musikcube
 label = "%output% "
 label-maxlen = 56
-format-underline = #FFFFFF
 
 [module/spotify]
 type = custom/script
 interval = 1
-format-prefix = " "
+format-background = #1db954
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = #1db954
+format-prefix-background = ${colors.background}
+format-suffix = %{T4} %{T-}  
+format-suffix-foreground = ${colors.background}
+format-suffix-background = #1db954
 format = <label>
 exec = python /home/kios/.config/polybar/spotify_status.py -f '  {artist}: {song}  '
-format-underline = #1db954
 
 
 [module/mpd]
@@ -177,6 +193,12 @@ icon-play = 
 icon-pause = 
 icon-next = 
 
+format-background = #1db954
+format-prefix = %{T4} %{T-}  
+format-prefix-foreground = #1db954
+format-prefix-background = ${colors.background}
+format-suffix = %{T4} %{T-}  
+format-suffix-foreground = ${colors.background}
 format-underline = #00FF00
 
 label-song =  🎜 %artist% - %title%

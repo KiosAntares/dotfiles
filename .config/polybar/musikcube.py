@@ -28,8 +28,11 @@ get_play_back = {
     "options": { }
 }
 
-ws.send(json.dumps(get_play_back))
-res = json.loads(ws.recv())
-track_info = res['options']['playing_track']
+try:
+    ws.send(json.dumps(get_play_back))
+    res = json.loads(ws.recv())
+    track_info = res['options']['playing_track']
 
-print(track_info['title'], " [", track_info['artist'], "-", track_info['album'], "]")
+    print(track_info['title'], " [", track_info['artist'], "-", track_info['album'], "]")
+except:
+    print('[Waiting for song playing]')
