@@ -19,7 +19,8 @@ polypwr-b = #FF9302
 
 poly-f 	 = #FEFEFE
 polyws-f = #008080
-polyws-b = #FFCDDA
+;polyws-b = #FFCDDA
+polyws-b = #FDE792
 
 [bar/example]
 monitor = ${env:MONITOR:}
