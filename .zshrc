@@ -17,3 +17,5 @@ POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='turquoise4'
 bindkey "^[[H" beginning-of-line
 bindkey "^[[3~" delete-char
 bindkey "^[[F" end-of-line
+
+export PATH=/usr/local/i386elfgcc/bin:$PATH
