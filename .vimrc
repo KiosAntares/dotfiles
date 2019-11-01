@@ -63,14 +63,13 @@ set expandtab
 
 " Specs for python files
 au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-	\ match BadWhitespace /\s\+$/
+    \ set tabstop=4     |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4  |
+    \ set textwidth=79  |
+    \ set expandtab     |
+    \ set autoindent    |
+    \ set fileformat=unix   
 
 " Settings for YouCompleteMe	
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -93,3 +92,5 @@ let g:instant_markdown_allow_external_content = 1
 autocmd vimenter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+

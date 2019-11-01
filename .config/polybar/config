@@ -1,4 +1,5 @@
 
+
 [colors]
 ;background = ${xrdb:color0:#222}
 background = #003535
@@ -24,13 +25,16 @@ polyws-b = #FDE792
 
 [bar/example]
 monitor = ${env:MONITOR:}
+enable-ipc = true
+override-redirect = true
+
 width = 100%
 height = 35
 fixed-center = false
 
 modules-left = i3 rpow xwindow
 modules-center = 
-modules-right = cmus musikcube spotify  pulseaudio memory cpu eth date powermenu
+modules-right = cmus musikcube spotify  pulseaudio memory cpu eth date tray powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -261,7 +265,7 @@ label = "   %time% %date%"
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>
 label-volume = VOL %percentage%%
 label-volume-foreground = ${root.foreground}
 
