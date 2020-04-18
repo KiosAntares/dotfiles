@@ -1,4 +1,3 @@
-set termguicolors
 set number
 set splitbelow
 set splitright

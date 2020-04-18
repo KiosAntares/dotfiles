@@ -34,7 +34,7 @@ fixed-center = false
 
 modules-left = i3 rpow xwindow
 modules-center = 
-modules-right = cmus musikcube spotify  pulseaudio memory cpu eth date tray powermenu
+modules-right = cmus mpd spotify  pulseaudio memory cpu eth date tray powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -42,10 +42,17 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-font-0 = fixed:pixelsize=12;3
-font-1 = unifont:fontformat=truetype:size=20:antialias=true;4
-font-2 = "3270Medium Nerd Font:style=Medium:size=22;4"
-font-3 = "3270Medium Nerd Font:style=Medium:size=26;5"
+
+;font-0 = "Source Code Pro:style=Medium:size=12;3;antialiasing=true"
+;font-1 = "Source Code Pro:style=Medium:size=20;3;antialiasing=true"
+;font-2 = "Source Code Pro:style=Medium:size=22;4;antialiasing=true"
+;font-3 = "Source Code Pro:style=Medium:size=26;5;antialiasing=true"
+
+font-0 = "FuraMono Nerd Font:style=Regular:size=12;3:antialiasing=true"
+font-1 = "FuraMono Nerd Font:style=Regular:size=20;0:antialiasing=true"
+font-2 = "FuraMono Nerd Font:style=Regular:size=22;4:antialiasing=true"
+font-3 = "FuraMono Nerd Font:style=Regular:size=26;5:antialiasing"
+
 
 tray-position = hidden
 tray-padding = 10
@@ -61,7 +68,7 @@ cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
-label = "  %title:0:30:...%"
+label = "  %title:0:30:...%  "
 format-underline = #FFF
 
 
@@ -86,7 +93,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
 
-format-prefix = "  "
+format-prefix = "  "
 
 format-background = ${colors.polyws-b}
 format-foreground = ${colors.polyws-f}
@@ -190,7 +197,7 @@ type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 
 host = 127.0.0.1
-port = 6601
+port = 6600
 
 icon-prev = 
 icon-stop = 
@@ -204,7 +211,16 @@ format-prefix-foreground = #1db954
 format-prefix-background = ${colors.background}
 format-suffix = %{T4} %{T-}  
 format-suffix-foreground = ${colors.background}
-format-underline = #00FF00
+
+
+
+;format-background = #1db954
+;format-prefix = %{T4} %{T-}  
+;format-prefix-foreground = #1db954
+;format-prefix-background = ${colors.background}
+;format-suffix = %{T4} %{T-}  
+;format-suffix-foreground = ${colors.background}
+;format-underline = #00FF00
 
 label-song =  🎜 %artist% - %title%
 

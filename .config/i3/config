@@ -55,32 +55,32 @@ bindsym Mod1+Down exec pactl set-sink-volume 1 -2%
 
 ################################################################################################
 
-# Screen brightness controls
-# bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
-
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F2 exec firefox
-#bindsym $mod+F3 exec pcmanfm
-bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec pcmanfm
-bindsym $mod+F5 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill compton
-bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
-bindsym Print exec --no-startup-id i3-scrot
-bindsym Ctrl+Print exec flameshot gui
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
-bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
-bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym     $mod+F2     exec                    firefox
+bindsym     $mod+F3     exec                    telegram-desktop
+
+bindsym     $mod+F5     exec    discord
+bindsym     $mod+F6     exec    steam
+
+bindsym     $mod+t      exec --no-startup-id    pkill compton
+bindsym     $mod+Ctrl+t exec --no-startup-id    compton -b
+
+bindsym     Ctrl+Print  exec                    flameshot gui
+bindsym     $mod+Print  exec --no-startup-id    i3-scrot -w
+
+bindsym     $mod+Ctrl+x exec --no-startup-id    xkill
+
+
 
 # other scripts starts
 
-bindsym $mod+Shift+p exec --no-startup-id /home/kios/Scripts/power-menu/power-menu.sh
-bindsym $mod+Ctrl+Shift+e exec --no-startup-id /home/kios/Scripts/kaomoji-rofi/kaomoji.sh
-bindsym $mod+Ctrl+Shift+n exec --no-startup-id /home/kios/Scripts/rofi-notes/rofi_notes.sh
+bindsym $mod+Ctrl+c exec rofi -show calc
+bindsym $mod+Ctrl+s exec rofi -show ssh
+
+# DEPRECATED -- MAKE QUICK MENU
+bindsym     $mod+Ctrl+Shift+e exec --no-startup-id /home/kios/Scripts/rofi-scripts/kaomoji-rofi/kaomoji.sh
+bindsym     $mod+Ctrl+Shift+n exec --no-startup-id /home/kios/Scripts/rofi-notes/rofi_notes.sh
+bindsym     $mod+Ctrl+Shift+i exec --no-startup-id /home/kios/Scripts/rofi-scripts/ipa-rofi/ipa.sh
 
 
 # change keyboard layout shortcuts
@@ -88,42 +88,42 @@ bindsym $mod+Ctrl+Shift+n exec --no-startup-id /home/kios/Scripts/rofi-notes/rof
 bindsym $mod+Ctrl+Shift+u exec /home/kios/Scripts/layout_set_us_int.sh
 bindsym $mod+Ctrl+Shift+Mod1+u exec /home/kios/Scripts/layout_set_us_int_alt.sh
 bindsym $mod+Ctrl+u exec /home/kios/Scripts/layout_set_us_std.sh
-bindsym $mod+Ctrl+i exec /home/kios/Scripts/layout_set_it_std.sh
+
 
 
 focus_follows_mouse no
 
 # change focus
- bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h          focus   left
+bindsym $mod+k          focus   down
+bindsym $mod+j          focus   up
+bindsym $mod+l          focus   right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+Left       focus   left
+bindsym $mod+Down       focus   down
+bindsym $mod+Up         focus   up
+bindsym $mod+Right      focus   right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h    move    left
+bindsym $mod+Shift+k    move    down
+bindsym $mod+Shift+j    move    up
+bindsym $mod+Shift+l    move    right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left move    left
+bindsym $mod+Shift+Down move    down
+bindsym $mod+Shift+Up   move    up
+bindsym $mod+Shift+Right move   right
 
 # workspace back and forth (with/without active container)
 workspace_auto_back_and_forth yes
 
 # split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
-bindsym $mod+q split toggle
+bindsym $mod+Ctrl+h     split h;    exec notify-send 'tile horizontally'
+bindsym $mod+v          split v;    exec notify-send 'tile vertically'
+bindsym $mod+q          split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -292,7 +292,7 @@ mode "resize" {
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nitrogen --restore; sleep 1; compton -b
-exec --no-startup-id sh ~/.screenlayout/def.sh 
+exec --no-startup-id sh ~/.screenlayout/default.sh 
 # exec --no-startup-id manjaro-hello
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
