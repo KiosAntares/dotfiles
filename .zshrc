@@ -23,30 +23,36 @@ setopt appendhistory
 unsetopt beep
 setopt extendedglob
 # End of lines configured by zsh-newuser-install
+
+# Only enable powerlevel10k prompt if in terminal emulator
 [[ "$TERM" != "screen" && "$TERM" != "linux" ]] && source /usr/share/powerlevel10k/powerlevel10k.zsh-theme
 
+# remap ls and editor
 alias lls='ls'
 alias ls='lsd'
+alias vim='nvim'
+
+# never used this
 alias lsl='lsd -1'
 alias lsa='lsd -a'
 alias lsla='lsd -1a'
-alias icat='kitty +kitten icat'
 
 # termbin alias
 alias termbin='nc termbin.com 9999'
+alias icat='kitty +kitten icat'
 
-alias vim='nvim'
-
+# Force rebind of home, end and delete
 bindkey "^[[H" beginning-of-line
 bindkey "^[[3~" delete-char
 bindkey "^[[F" end-of-line
 
+# Add i386 Cross compiler to path
 export PATH=~/.local/bin/:/usr/local/i386elfgcc/bin:/home/kios/.cargo/bin:$PATH
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# Reconfigure p10k if file missing
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
+# Run ufetch if only one termemu is running
 if [[ $(ps aux | grep kitty | grep -v "grep" | wc -l) == "1" ]]
 then
     ufetch

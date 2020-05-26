@@ -34,7 +34,7 @@ fixed-center = false
 
 modules-left = i3 rpow xwindow
 modules-center = 
-modules-right = cmus mpd spotify  pulseaudio memory cpu eth date tray powermenu
+modules-right = cmus spotify  pulseaudio memory cpu eth date tray powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -191,6 +191,8 @@ format-suffix-background = #1db954
 format = <label>
 exec = python /home/kios/.config/polybar/spotify_status.py -f '  {artist}: {song}  '
 
+click-left = playerctl -d spotifyd play-pause
+
 
 [module/mpd]
 type = internal/mpd
@@ -224,7 +226,7 @@ format-suffix-foreground = ${colors.background}
 
 label-song =  🎜 %artist% - %title%
 
-label-song-maxlen = 25
+label-song-maxlen = 40
 label-song-ellipsis = true
 
 
