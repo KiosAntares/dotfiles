@@ -3,6 +3,8 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
 
+nmap <C-L>d DiscordUpdatePresence
+
 "inoremap <silent><expr> <TAB>
 "      \ pumvisible() ? "\<C-n>" :
 "      \ <SID>check_back_space() ? "\<TAB>" :

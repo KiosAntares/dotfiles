@@ -2,39 +2,43 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #003535
+background = #1d1e2c
 background-alt = #004040
 ;foreground = ${xrdb:color7:#222}
-foreground = #FEFEFE
-foreground-alt = #555
-primary = #009090
+foreground = #ffe7eb
+foreground-alt = #ffe7eb
+
+
+primary = #ff5c7b
 secondary = #e60053
 alert = #bd2c40
 
-polygradient-0 = #006666
-polygradient-1 = #008080
-polygradient-2 = #66b2b2
+polygradient-0 = #ff5c7b
+polygradient-1 = #e58864
+polygradient-2 = #ff9bae
 
 polypwr-f = ${colors.background}
-polypwr-b = #FF9302
+polypwr-b = #de541e
 
 poly-f 	 = #FEFEFE
-polyws-f = #008080
+polyws-f = ${colors.background}
 ;polyws-b = #FFCDDA
-polyws-b = #FDE792
+polyws-b = ${colors.polygradient-2}
 
 [bar/example]
 monitor = ${env:MONITOR:}
 enable-ipc = true
 override-redirect = true
 
+wm-restak=i3
+
 width = 100%
-height = 35
+height = 24
 fixed-center = false
 
 modules-left = i3 rpow xwindow
 modules-center = 
-modules-right = cmus spotify  pulseaudio memory cpu eth date tray powermenu
+modules-right = spotify cmus pulseaudio memory cpu eth date tray powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -98,7 +102,7 @@ format-prefix = "  "
 format-background = ${colors.polyws-b}
 format-foreground = ${colors.polyws-f}
 
-label-mode-padding = 2
+label-mode-padding = 0
 label-mode-foreground = ${colors.polyws-f}
 label-mode-background = ${colors.polyws-b}
 
@@ -106,11 +110,11 @@ label-mode-background = ${colors.polyws-b}
 label-focused = %index%
 label-focused-background = ${colors.polyws-b}
 label-focused-underline = ${colors.polyws-f}
-label-focused-padding = 2
+label-focused-padding = 1
 label-focused-foreground = ${colors.polyws-f}
  
 label-unfocused = %index%
-label-unfocused-padding = 2
+label-unfocused-padding = 1
 label-unfocused-foreground = ${colors.polyws-f}
 label-unfocused-background = ${colors.polyws-b}
 
@@ -124,7 +128,7 @@ label-visible-foreground = ${colors.polyws-f}
 ; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 2
+label-urgent-padding = 1
 
 ; Separator in between workspaces
 label-separator = %{T3}%{T-}  
@@ -178,18 +182,24 @@ exec-if = pgrep -x musikcube
 label = "%output% "
 label-maxlen = 56
 
+[module/spotify2]
+type=custom/script
+exec=/home/kios/.config/polybar/spotify2
+tail=true
+
+
 [module/spotify]
 type = custom/script
 interval = 1
-format-background = #1db954
+format-background = #CB7286
 format-prefix = %{T4} %{T-}  
-format-prefix-foreground = #1db954
+format-prefix-foreground = #CB7286
 format-prefix-background = ${colors.background}
 format-suffix = %{T4} %{T-}  
 format-suffix-foreground = ${colors.background}
-format-suffix-background = #1db954
+format-suffix-background = #CB7286
 format = <label>
-exec = python /home/kios/.config/polybar/spotify_status.py -f '  {artist}: {song}  '
+exec = python /home/kios/.config/polybar/spotify_status.py -f '♫ {artist}: {song}' 
 
 click-left = playerctl -d spotifyd play-pause
 
@@ -307,6 +317,12 @@ bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
 
+[module/bt_batt]
+type=custom/script
+exec = ~/Scripts/bluetooth_battery.py 1C:91:9D:A5:60:97
+exec-if = "bluetoothctl info | grep 1C:91:9D:A5:60:97"
+interval = 60
+format = " <label> "
 
 
 [module/alsa]

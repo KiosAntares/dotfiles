@@ -1,6 +1,5 @@
 autocmd BufNewFile,BufRead *.tex set nofoldenable
 
-
 function! s:goyo_enter()
   if executable('tmux') && strlen($TMUX)
     silent !tmux set status off

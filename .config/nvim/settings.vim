@@ -1,4 +1,5 @@
 set number
+set relativenumber
 set splitbelow
 set splitright
 set shell=/bin/zsh
@@ -8,6 +9,19 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set expandtab
+
+set nowrap
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.config/nvim/undodir
+set undofile
+set incsearch
+
+"set colorcolumn=80,120
+let &colorcolumn="80,".join(range(120,999),",")
+"highlight ColorColumns ctermbg=1 guibg=#adadad
+hi ColorColumn cterm=reverse
 
 set hidden
 set nobackup
@@ -28,3 +42,5 @@ let g:vimtex_fold_manual = 1
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
+
+let g:discord_activate_on_enter = 'true'

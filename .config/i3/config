@@ -33,15 +33,13 @@ bindsym $mod+Shift+q kill
 # start program launcher
 bindsym $mod+d exec --no-startup-id rofi -show run
 
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
 
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
 
-exec --no-startup-id volumeicon
-bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+# exec --no-startup-id volumeicon
+bindsym $mod+Ctrl+m exec pavucontrol
 #exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 #bindsym $mod+Ctrl+m exec pavucontrol
@@ -53,7 +51,7 @@ bindsym XF86AudioMute        exec pactl set-sink-mute 2 toggle
 bindsym Mod1+Up exec pactl set-sink-volume 1 +2%
 bindsym Mod1+Down exec pactl set-sink-volume 1 -2%
 
-################################################################################################
+###############################################################################
 
 # Start Applications
 bindsym     $mod+F2     exec                    firefox
@@ -62,8 +60,10 @@ bindsym     $mod+F3     exec                    telegram-desktop
 bindsym     $mod+F5     exec    discord
 bindsym     $mod+F6     exec    steam
 
+bindsym     $mod+F8     exec    vscodium
+
 bindsym     $mod+t      exec --no-startup-id    pkill compton
-bindsym     $mod+Ctrl+t exec --no-startup-id    compton -b
+bindsym     $mod+Ctrl+t exec --no-startup-id    dbus-launch compton
 
 bindsym     Ctrl+Print  exec                    flameshot gui
 bindsym     $mod+Print  exec --no-startup-id    i3-scrot -w
@@ -78,17 +78,14 @@ bindsym $mod+Ctrl+c exec rofi -show calc
 bindsym $mod+Ctrl+s exec rofi -show ssh
 
 # DEPRECATED -- MAKE QUICK MENU
-bindsym     $mod+Ctrl+Shift+e exec --no-startup-id /home/kios/Scripts/rofi-scripts/kaomoji-rofi/kaomoji.sh
+bindsym     $mod+Ctrl+Shift+e exec --no-startup-id /home/kios/Scripts/splatmoji/splatmoji -s light copy
 bindsym     $mod+Ctrl+Shift+n exec --no-startup-id /home/kios/Scripts/rofi-notes/rofi_notes.sh
 bindsym     $mod+Ctrl+Shift+i exec --no-startup-id /home/kios/Scripts/rofi-scripts/ipa-rofi/ipa.sh
 
 
 # change keyboard layout shortcuts
 
-bindsym $mod+Ctrl+Shift+u exec /home/kios/Scripts/layout_set_us_int.sh
-bindsym $mod+Ctrl+Shift+Mod1+u exec /home/kios/Scripts/layout_set_us_int_alt.sh
-bindsym $mod+Ctrl+u exec /home/kios/Scripts/layout_set_us_std.sh
-
+bindsym $mod+Ctrl+u exec /home/kios/Scripts/layout
 
 
 focus_follows_mouse no
@@ -203,45 +200,33 @@ bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
 bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
 
+# A master /stack 
+bindsym $mod+Shift+Ctrl+s   layout splitv;\
+                       move left;\
+                       resize grow right 20 px or 20 ppt;\
+                       split v;
+
 # Open applications on specific workspaces
-# assign [class="Thunderbird"] $ws1
-# assign [class="Pale moon"] $ws2
-# assign [class="Pcmanfm"] $ws3
-# assign [class="Skype"] $ws5
 assign [class="obs"] $ws9
 assign [class="telegram-desktop"] $ws7
+assign [class="TelegramDesktop"] $ws7
 assign [class="discord"] $ws5
+
+for_window[class="socialclubhelper.exe"] floating enable
+# for_window[class="Steam"] floating enable
 
 # Open specific applications in floating mode
 for_window [title="alsamixer"] floating enable border pixel 1
 for_window [class="calamares"] floating enable border normal
-for_window [class="Clipgrab"] floating enable
 for_window [title="File Transfer*"] floating enable
-for_window [class="Galculator"] floating enable border pixel 1
-for_window [class="GParted"] floating enable border normal
-for_window [title="i3_help"] floating enable sticky enable border normal
-for_window [class="Lightdm-settings"] floating enable
 for_window [class="Lxappearance"] floating enable sticky enable border normal
-for_window [class="Manjaro-hello"] floating enable
-for_window [class="Manjaro Settings Manager"] floating enable border normal
-for_window [title="MuseScore: Play Panel"] floating enable
 for_window [class="Nitrogen"] floating enable sticky enable border normal
-for_window [class="Oblogout"] fullscreen enable
-for_window [class="octopi"] floating enable
-for_window [title="About Pale Moon"] floating enable
-for_window [class="Pamac-manager"] floating enable
 for_window [class="Pavucontrol"] floating enable
-for_window [class="qt5ct"] floating enable sticky enable border normal
-for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
 for_window [class="Simple-scan"] floating enable border normal
-for_window [class="(?i)System-config-printer.py"] floating enable border normal
-for_window [class="Skype"] floating enable border normal
-for_window [class="Timeset-gui"] floating enable border normal
 # for_window [class="(?i)virtualbox"] floating enable border normal
-for_window [class="Xfburn"] floating enable
 
 # switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
+# for_window [urgent=latest] focus
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -298,7 +283,7 @@ mode "resize" {
 
 # Autostart applications
 exec --no-startup-id /usr/bin/lxpolkit
-exec --no-startup-id nitrogen --restore; sleep 1; compton -b
+exec --no-startup-id nitrogen --restore; sleep 1; dbus-launch compton -b
 exec --no-startup-id sh ~/.screenlayout/default.sh 
 # exec --no-startup-id manjaro-hello
 # exec_always --no-startup-id sbxkb
@@ -346,10 +331,10 @@ bindsym $mod+m bar mode toggle
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-  client.focused          #556064 #556064 #80FFF9 #FDF6E3
-  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
-  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
-  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
+  client.focused          #ff9bae #556064 #80FFF9 #FDF6E3
+  client.focused_inactive #ff9bae #2F3D44 #1ABC9C #454948
+  client.unfocused        #404255 #2F3D44 #1ABC9C #454948
+  client.urgent           #ff4c7b #FDF6E3 #1ABC9C #268BD2
   client.placeholder      #000000 #0c0c0c #ffffff #000000 
 
   client.background       #2B2C2B
@@ -361,10 +346,10 @@ bindsym $mod+m bar mode toggle
 # Set inner/outer gaps
 gaps inner  14
 gaps outer -2
-gaps top 32
+gaps top 24
 
 
-bindsym $mod+b exec "polybar-msg cmd show && i3-msg gaps top all set 32"
+bindsym $mod+b exec "polybar-msg cmd show && i3-msg gaps top all set 24"
 bindsym $mod+Shift+b exec "polybar-msg cmd hide && i3-msg gaps top all set 0"
 
 
