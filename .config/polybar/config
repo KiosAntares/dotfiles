@@ -36,9 +36,9 @@ width = 100%
 height = 24
 fixed-center = false
 
-modules-left = i3 rpow xwindow
+modules-left = ewhm i3 rpow xwindow
 modules-center = 
-modules-right = spotify cmus pulseaudio memory cpu eth date tray powermenu
+modules-right = spotify cmus pulseaudio memory cpu date tray powermenu
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -151,7 +151,7 @@ exec-if = pgrep -x cmus
 interval = 1
 
 click-left = cmus-remote --next
-click-right = cmus-remote --prev
+click-right = cmus-remote --pre
 click-middle = cmus-remote --pause
 scroll-up = cmus-remote --volume +5%
 scroll-down = cmus-remote --volume -5%
@@ -269,7 +269,7 @@ format-connected-prefix-background = ${colors.polygradient-2}
 format-connected-background = ${colors.polygradient-1}
 
 type = internal/network
-interface = enp0s31f6
+interface = enp6s0
 interval = 3.0
 label-connected = "  : %local_ip%"
 format-disconnected =
@@ -278,7 +278,7 @@ format-disconnected =
 [module/date]
 format-prefix = %{T4} %{T-}  
 format-prefix-foreground = ${colors.polygradient-0}
-format-prefix-background = ${colors.polygradient-1}
+format-prefix-background = ${colors.polygradient-2}
 format-background = ${colors.polygradient-0}
 
 type = internal/date

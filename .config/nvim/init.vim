@@ -6,7 +6,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 "--- Filetree
 Plug 'scrooloose/nerdtree',             { 'on' : 'NERDTreeToggle' }
-Plug 'scrooloose/nerdtree-git-plugin',  { 'on' : 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree-git-plugin',  { 'on' : 'NERDTreeToggle' }
 
 "--- Utilities
 Plug 'jremmen/vim-ripgrep'
@@ -23,15 +23,16 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dadbod'
 
 "--- Language specific plugins
+Plug 'dag/vim-fish'
 Plug 'lervag/vimtex',                   { 'for': 'tex' }
 
 "--- Colorschemes && Style
 Plug 'vim-airline/vim-airline'
 Plug 'dylanaraps/wal.vim'
+Plug 'ryanoasis/vim-devicons'
 
 "--- Random plugins
 Plug 'junegunn/goyo.vim'
-Plug 'aurieh/discord.nvim'
 
 "
 
