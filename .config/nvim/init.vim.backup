@@ -1,0 +1,62 @@
+:
+call plug#begin(stdpath('data') . '/plugged')
+
+Plug 'neovim/nvim-lspconfig'
+
+"--- Autocomplete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+"--- Filetree
+Plug 'scrooloose/nerdtree',             { 'on' : 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdtree-git-plugin',  { 'on' : 'NERDTreeToggle' }
+
+"--- Utilities
+" Plug 'jremmen/vim-ripgrep'
+Plug 'lyuts/vim-rtags'
+Plug 'mbbill/undotree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'skammer/vim-css-color'
+Plug 'chrisbra/csv.vim'
+Plug 'sheerun/vim-polyglot'  
+Plug 'simrat39/symbols-outline.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+Plug 'phaazon/hop.nvim'
+"--- Tpope's utilities
+Plug 'tpope/vim-surround'               
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dadbod'
+
+"--- Language specific plugins
+Plug 'dag/vim-fish'
+Plug 'lervag/vimtex',                   { 'for': 'tex' }
+
+"--- Colorschemes && Style
+Plug 'dylanaraps/wal.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+
+
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+
+"--- Random plugins
+Plug 'junegunn/goyo.vim'
+
+"
+
+call plug#end()
+
+lua require'hop'.setup() 
+
+" colorscheme wal
+let g:catppuccin_flavour = "mocha" 
+colorscheme catppuccin
+let &t_ut=''
+
+source ~/.config/nvim/mappings.vim
+source ~/.config/nvim/settings.vim
+source ~/.config/nvim/autocmds.vim
+source ~/.config/nvim/commands.vim
+source ~/.config/nvim/servers.vim

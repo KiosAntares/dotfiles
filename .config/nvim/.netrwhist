@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/kios/.config/jellyfin-mpv-shim'
+let g:netrw_dirhist_2='/home/kios/.config/neofetch'
+let g:netrw_dirhist_1='/home/kios/Documents/writing'
+let g:netrw_dirhist_0='/home/kios/Repos/twitchbot'
+let g:netrw_dirhist_9='/home/kios/Scripts'
+let g:netrw_dirhist_8='/home/kios/Repos/twitchbot/.mypy_cache'
+let g:netrw_dirhist_7='/home/kios/Repos/twitchbot'
+let g:netrw_dirhist_6='/home/kios/Downloads/antplus_hrm_rx/base'
+let g:netrw_dirhist_5='/home/kios/.config'
+let g:netrw_dirhist_4='/home/kios/.config/i3'

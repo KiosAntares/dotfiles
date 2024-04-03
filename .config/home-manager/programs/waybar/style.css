@@ -1,0 +1,135 @@
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #11111b;
+
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color subtext1 #bac2de;
+
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color surface2 #585b70;
+
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
+
+@define-color blue      #89b4fa;
+@define-color lavender  #b4befe;
+@define-color sapphire  #74c7ec;
+@define-color sky       #89dceb;
+@define-color teal      #94e2d5;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color peach     #fab387;
+@define-color maroon    #eba0ac;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+@define-color pink      #f5c2e7;
+@define-color flamingo  #f2cdcd;
+@define-color rosewater #f5e0dc;
+
+* {
+    all: initial;
+    border: none;
+    border-radius: 0;
+    font-family: "CaskaydiaCove Nerd Font";
+    font-size: 16px;
+    background: @base;
+    color: @text;
+    min-height: 0;
+    /* padding: 0px 5px;*/
+}
+
+#window {
+    font-weight: normal;
+    font-family: "FiraCode Nerd Font";
+}
+
+#workspaces {
+    padding: 0 0 0 5px;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    background: transparent;
+    border-top: 2px solid transparent;
+}
+
+#workspaces button.active {
+    border-top: 3px solid #cba6f7;
+    font-weight: bold;
+}
+
+#window {
+    padding: 0 5px;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#battery { 
+    padding: 0 10px;
+}
+
+#backlight {
+    padding: 0 20px;
+}
+
+#network {
+    padding: 0 10px;
+}
+
+#pulseaudio-slider {
+    padding: 0 5px;
+}
+
+#battery icon {
+    color: @red;
+}
+
+@keyframes blink {
+    to {
+        background-color: @pink;
+        color: @mantle;
+    }
+}
+
+#battery.warning:not(.charging) {
+    color: @peach;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disconnected {
+    background: @red;
+    color: @crust;
+ }
+
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough {
+    min-height: 5px;
+    min-width: 40px;
+    border-radius: 2px;
+    background-color: @crust;
+}
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-color: @mauve;
+}
+
+#tray {
+}
+        
