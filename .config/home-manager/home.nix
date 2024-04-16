@@ -92,8 +92,9 @@ in {
     jellyfin-media-player
     davis
     libreoffice-qt
-    motrix
+    # motrix
     ncmpcpp
+    vesktop
     (pkgs.discord.override {
       withOpenASAR = true;
       # withVencord = true;

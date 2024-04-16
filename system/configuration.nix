@@ -164,8 +164,10 @@ in {
   };
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "altgr-intl";
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "altgr-intl";
+  };
   # services.xserver.xkb.options = "caps:swapescape,altwin:swap_alt_win";
 
   programs.nano.enable = false;
@@ -186,7 +188,7 @@ in {
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
@@ -243,6 +245,7 @@ in {
       mono
       pavucontrol
       lutris
+      yadm
     ];
   };
 

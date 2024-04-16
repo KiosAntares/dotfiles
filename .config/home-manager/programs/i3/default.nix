@@ -11,13 +11,14 @@
       bars = [];
       assigns = {
         "5" = [
-          {class = "^discord$";}
+            {class = "^discord$";}
+            {class = "^vesktop$";}
         ];
         "7" = [
-          {class = "^telegram-desktop$";}
+          {class = "^TelegramDesktop$";}
         ];
         "8" = [
-          {class = "^Steam$";}
+          {class = "^steam$";}
         ];
         "9" = [
           {class = "^obs$";}
@@ -117,7 +118,7 @@
           "${mod}+Shift+e" = "exec  \"i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'\"";
           "${mod}+F2" = "exec firefox";
           "${mod}+F3" = "exec telegram-desktop";
-          "${mod}+F5" = "exec discordcanary";
+          "${mod}+F5" = "exec vesktop";
           "${mod}+F8" = "exec steam";
           "${mod}+Shift+s" = "exec flameshot gui";
 
