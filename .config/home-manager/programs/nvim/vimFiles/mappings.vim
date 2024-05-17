@@ -11,15 +11,6 @@ vmap <S-Tab> <
 imap <c-Tab> <c-t>
 imap <c-s-Tab> <c-d>
 
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
 nmap <C-n> :NvimTreeToggle<CR>
 nmap <C-b> :SymbolsOutline<CR>
 

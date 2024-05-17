@@ -24,6 +24,7 @@ in {
     enabledExtensions = with spicePkgs.extensions; [
       fullAppDisplay
       keyboardShortcut
+      bookmark
       shuffle # shuffle+ (special characters are sanitized out of ext names)
       # hidePodcasts
       adblock
