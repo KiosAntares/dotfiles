@@ -163,6 +163,41 @@ in {
     ];
   };
 
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+    gedit
+  ]) ++ (with pkgs.gnome; [
+    cheese # webcam tool
+    gnome-music
+    gnome-terminal
+    ghex
+    rygel
+    polari
+    vinagre
+    lightsoff
+    aisleriot
+    swell-foop
+    gnome-maps
+    gnome-notes
+    gnome-chess
+    gnome-boxes
+    quadrapassel
+    gnome-taquin
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    gnome-characters
+    totem # video player
+    tali # poker game
+    iagno # go game
+    hitori # sudoku game
+    atomix # puzzle game
+  ]);
+  services.xserver.desktopManager.gnome = {
+    enable = true;
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -195,7 +230,7 @@ in {
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
     config = {
       common = {
         default = ["gtk"];
@@ -228,7 +263,7 @@ in {
   services.systembus-notify.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   programs.fish.enable = true;
   programs.fish.promptInit = "${pkgs.any-nix-shell}/bin/any-nix-shell fish --info-right | source";

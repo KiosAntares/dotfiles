@@ -10,13 +10,22 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 
+set showmode
 set nowrap
+set ignorecase
 set smartcase
 set noswapfile
 set nobackup
-set undodir=~/.config/nvim/undodir
+set undodir="~/.config/nvim/undodir"
 set undofile
 set incsearch
+set hlsearch
+set inccommand=split
+
+set cursorline
+set scrolloff=5
+set list
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 
 set mouse+=a
 
@@ -40,7 +49,6 @@ let g:catppuccin_flavour = "mocha"
 colorscheme catppuccin
 let &t_ut=''
 
-
 let g:tex_flavor  = 'latex'
 let g:tex_conceal = ''
 let g:vimtex_fold_enabled = 0
@@ -48,7 +56,3 @@ let g:vimtex_fold_manual = 1
 let g:vimtex_latexmk_continuous = 1
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
-
-let bufferline = get(g:, 'bufferline', {})
-let bufferline.auto_hide = v:true
-let bufferline.icon_custom_colors = v:true

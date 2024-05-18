@@ -1,5 +1,6 @@
 {
-  inputs.hyprland.url = "github:hyprwm/Hyprland";
+  # inputs.hyprland.url = "github:hyprwm/Hyprland?submodules=1";
+  inputs.hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
   inputs.home-manager.url = "github:nix-community/home-manager";
 
