@@ -3,7 +3,7 @@
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,10 +15,14 @@
     spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
-  outputs = { nixpkgs, home-manager, spicetify-nix, ... } @ inputs :
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... } @ inputs :
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+          inherit system;
+          # overlays = [self.overlays.default];
+      };
     in {
       homeConfigurations."kios" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

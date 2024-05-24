@@ -114,6 +114,7 @@ in {
     # lutris
     sunshine
     prismlauncher
+    ferium # cli mod manager
     osu-lazer
 
     # Emulation

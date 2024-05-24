@@ -30,11 +30,20 @@ in {
     # install needed binaries here
     extraPackages = with pkgs; [
       # used to compile tree-sitter grammar
+      luajit
       tree-sitter
       nodePackages.pyright
       ccls
       lua-language-server
       rust-analyzer
+      imagemagick
+    ];
+
+    extraLuaPackages = luaps: [
+      luaps.lua-utils-nvim
+      luaps.pathlib-nvim
+      luaps.magick
+      luaps.luarocks
     ];
 
     extraLuaConfig = builtins.readFile ./config.lua;
@@ -73,24 +82,57 @@ in {
         # LSP-based surround of elements
         plugin = nvim-surround;
         type = "lua";
-        config = ''
-          require("nvim-surround").setup({})
-        '';
+        config = ''require("nvim-surround").setup({})'';
       }
 
       # Syntax highlighting and language support
-      nvim-treesitter # LSP-based highlighting
+      {
+        plugin = nvim-treesitter.withPlugins (p:
+          with p; [
+              # AllGrammars
+              tree-sitter-norg
+              tree-sitter-norg-meta
+        ]);
+        # plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''
+        require("nvim-treesitter.configs").setup {
+            auto_install = false,
+            -- ensure_installed = { 'norg' },
+            highlight = {
+                enable = true,
+            },
+            -- parser_install_dir = "/home/kios/parsers-temp"
+          }
+        '';
+      }
       vim-polyglot # Multi language highlighting
       zig-vim
       vim-svelte
-      neorg # Org-like mode
       vim-css-color
       csv-vim
       vim-fish
       vimtex
       vim-devicons
       nvim-web-devicons
-      nvim-treesitter-parsers.nix
+      {
+        plugin = image-nvim;
+        type = "lua";
+        config = ''require("image").setup({})'';
+      }
+
+      # Org like tool
+      nui-nvim
+      plenary-nvim
+      nvim-nio
+      {
+        plugin = neorg;
+        type = "lua";
+        config = builtins.readFile ./plugins/neorg.lua;
+      }
+      neorg-telescope
+      nvim-treesitter.builtGrammars.tree-sitter-norg
+      # nvim-treesitter.builtGrammars.tree-sitter-norg-meta
 
       # Autocomplete
       luasnip

@@ -194,6 +194,10 @@
           notification = false;
         }
         {command = "flameshot";}
+        {
+            command = "xset -dpms s off";
+            notification = false;
+        }
       ];
 
       terminal = "kitty";
