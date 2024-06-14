@@ -91,6 +91,7 @@ in {
     jdk
     jellyfin-media-player
     davis
+    lyrics-in-terminal
     libreoffice-qt
     # motrix
     ncmpcpp
@@ -99,12 +100,13 @@ in {
       withOpenASAR = true;
       # withVencord = true;
    })
-    inputs.nyaa.packages.x86_64-linux.default
+    # inputs.nyaa.packages.x86_64-linux.default
 
     # CG
     krita
     inkscape
     darktable
+    davinci-resolve
 
     # Gaming and compatibility
     heroic
@@ -118,7 +120,7 @@ in {
     osu-lazer
 
     # Emulation
-    ryujinx
+    # ryujinx
     pcsx2
     # rpcs3
     dolphin-emu

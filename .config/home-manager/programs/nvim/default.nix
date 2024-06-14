@@ -32,7 +32,7 @@ in {
       # used to compile tree-sitter grammar
       luajit
       tree-sitter
-      nodePackages.pyright
+      pyright
       ccls
       lua-language-server
       rust-analyzer

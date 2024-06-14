@@ -47,8 +47,8 @@
       "bar/main" = {
         font-0 = "CaskaydiaCove Nerd Font:pixelsize=12;2.25";
         monitor = "\${env:MONITOR:}";
-        scroll-up = "i3wm-wsnext";
-        scroll-down = "i3wm-wsprev";
+        scroll-up = "#i3.next";
+        scroll-down = "#i3.prev";
         fixed-center = "true";
         width = "100%";
         height = 25;
@@ -59,10 +59,9 @@
         padding-left = 1;
         padding-right = 1;
         module-margin = 0;
-        tray-position = "right";
         modules-left = "i3 title";
         modules-center = "mydate";
-        modules-right = "pipewire-simple memory cpu power";
+        modules-right = "pipewire-simple memory cpu power tray";
       };
 
       "module/memory" = {
@@ -71,7 +70,7 @@
         format = "<label>";
         label = "RAM %percentage_used:2%%";
         label-padding = 1;
-        format-background = "\${colors.gradient-2}";
+        format-background = "\${colors.gradient-1}";
       };
       "module/cpu" = {
         type = "internal/cpu";
@@ -148,6 +147,11 @@
 
         menu-2-0 = "    ";
         menu-2-0-exec = "shutdown now";
+      };
+      "module/tray" = {
+        type = "internal/tray";
+        tray-background = "\${colors.background}";
+        tray-spacing = 5;
       };
     };
   };
