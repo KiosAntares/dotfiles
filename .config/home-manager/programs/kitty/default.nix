@@ -20,6 +20,7 @@
     shellIntegration = {
       enableFishIntegration = true;
     };
-    theme = "Catppuccin-Mocha";
+    # theme = "Catppuccin-Mocha";
+    catppuccin.enable = true;
   };
 }

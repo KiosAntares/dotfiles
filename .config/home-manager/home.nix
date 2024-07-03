@@ -33,26 +33,24 @@ in {
   programs.home-manager.enable = true;
 
   gtk = {
-      enable = true;
-      catppuccin.enable = true;
+    enable = true;
+    catppuccin.enable = true;
     #theme = {
     #  package = pkgs.catppuccin-gtk;
     #  name = "Catppuccin-Frappe-Standard-Blue-Dark";
     # };
-};
+  };
 
-   catppuccin = {
-       enable = true;
-       flavor = "mocha";
-   };
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
 
-
-
-dconf.settings = {
+  dconf.settings = {
     "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
+      color-scheme = "prefer-dark";
     };
-};
+  };
 
   imports = [
     ./programs/nvim/default.nix
@@ -69,7 +67,8 @@ dconf.settings = {
     ./programs/waybar/default.nix
     ./programs/hyprland/default.nix
     ./programs/broot/default.nix
-];
+    ./programs/bat/default.nix
+  ];
 
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -81,7 +80,7 @@ dconf.settings = {
     swww
     grimblast
     foot
-    gamescope   
+    gamescope
 
     # Theming and aesthetic
     catppuccin-gtk
@@ -113,7 +112,7 @@ dconf.settings = {
     (pkgs.discord.override {
       withOpenASAR = true;
       # withVencord = true;
-   })
+    })
     # inputs.nyaa.packages.x86_64-linux.default
 
     # CG
