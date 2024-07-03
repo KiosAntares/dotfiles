@@ -13,9 +13,10 @@
         inputs.nixpkgs.follows = "nixpkgs";
     };
     spicetify-nix.url = "github:the-argus/spicetify-nix";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, spicetify-nix, ... } @ inputs :
+  outputs = { self, nixpkgs, home-manager, spicetify-nix, catppuccin, ... } @ inputs :
     let
       system = "x86_64-linux";
       # pkgs = nixpkgs.legacyPackages.${system};
@@ -32,8 +33,7 @@
         modules = [ 
             ./home.nix 
             ./programs/spotify/default.nix
-            {
-        }
+            catppuccin.homeManagerModules.catppuccin
         ];
 
         # Optionally use extraSpecialArgs

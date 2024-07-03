@@ -33,12 +33,26 @@ in {
   programs.home-manager.enable = true;
 
   gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.catppuccin-gtk;
-      name = "Catppuccin-Frappe-Standard-Blue-Dark";
+      enable = true;
+      catppuccin.enable = true;
+    #theme = {
+    #  package = pkgs.catppuccin-gtk;
+    #  name = "Catppuccin-Frappe-Standard-Blue-Dark";
+    # };
+};
+
+   catppuccin = {
+       enable = true;
+       flavor = "mocha";
+   };
+
+
+
+dconf.settings = {
+    "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
     };
-  };
+};
 
   imports = [
     ./programs/nvim/default.nix
@@ -74,7 +88,7 @@ in {
     papirus-icon-theme
     breeze-gtk
     mangohud
-    neofetch
+    fastfetch
     lxappearance
     gotop
 
@@ -105,7 +119,7 @@ in {
     # CG
     krita
     inkscape
-    darktable
+    # darktable
     davinci-resolve
 
     # Gaming and compatibility
