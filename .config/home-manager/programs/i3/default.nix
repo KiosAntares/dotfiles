@@ -11,8 +11,8 @@
       bars = [];
       assigns = {
         "5" = [
-            {class = "^discord$";}
-            {class = "^vesktop$";}
+          {class = "^discord$";}
+          {class = "^vesktop$";}
         ];
         "7" = [
           {class = "^TelegramDesktop$";}
@@ -195,8 +195,8 @@
         }
         {command = "flameshot";}
         {
-            command = "xset -dpms s off";
-            notification = false;
+          command = "xset -dpms s off";
+          notification = false;
         }
       ];
 

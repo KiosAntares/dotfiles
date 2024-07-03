@@ -68,6 +68,7 @@ in {
     ./programs/hyprland/default.nix
     ./programs/broot/default.nix
     ./programs/bat/default.nix
+    ./programs/rofi/default.nix
   ];
 
   # home.sessionVariables.NIXOS_OZONE_WL = "1";

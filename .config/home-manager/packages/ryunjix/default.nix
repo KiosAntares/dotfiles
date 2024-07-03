@@ -1,11 +1,11 @@
-{ pkgs ? import <nixpkgs> {}
-, stdenv
-, fetchFromGitHub
-, buildDotnetPackage
-, dotnetPackages
-, pkg-config
+{
+  pkgs ? import <nixpkgs> {},
+  stdenv,
+  fetchFromGitHub,
+  buildDotnetPackage,
+  dotnetPackages,
+  pkg-config,
 }:
-
 buildDotnetPackage rec {
   pname = "ryunjix";
   version = "0.1.1";

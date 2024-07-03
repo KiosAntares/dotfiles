@@ -1,5 +1,10 @@
-{ stdenv, pkgs, fetchFromGitHub, rustPlatform, ... }:
-
+{
+  stdenv,
+  pkgs,
+  fetchFromGitHub,
+  rustPlatform,
+  ...
+}:
 rustPlatform.buildRustPackage rec {
   pname = "davis";
   version = "0.1.3";

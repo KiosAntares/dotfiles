@@ -6,6 +6,7 @@
 }: {
   programs.mpv = {
     enable = true;
+    catppuccin.enable = true;
     config = {
       profile = "gpu-hq";
       force-window = true;

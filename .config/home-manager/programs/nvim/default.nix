@@ -89,21 +89,21 @@ in {
       {
         plugin = nvim-treesitter.withPlugins (p:
           with p; [
-              # AllGrammars
-              tree-sitter-norg
-              tree-sitter-norg-meta
-        ]);
+            # AllGrammars
+            tree-sitter-norg
+            tree-sitter-norg-meta
+          ]);
         # plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
         config = ''
-        require("nvim-treesitter.configs").setup {
-            auto_install = false,
-            -- ensure_installed = { 'norg' },
-            highlight = {
-                enable = true,
-            },
-            -- parser_install_dir = "/home/kios/parsers-temp"
-          }
+          require("nvim-treesitter.configs").setup {
+              auto_install = false,
+              -- ensure_installed = { 'norg' },
+              highlight = {
+                  enable = true,
+              },
+              -- parser_install_dir = "/home/kios/parsers-temp"
+            }
         '';
       }
       vim-polyglot # Multi language highlighting

@@ -4,7 +4,6 @@
   lib,
   ...
 }: {
-
   wayland.windowManager.hyprland = {
     enable = true;
     plugins = [];
@@ -32,11 +31,11 @@
         touchpad = {
           disable_while_typing = "0";
         };
-    };
+      };
 
-    cursors = {
+      cursors = {
         no_hardware_cursor = true;
-    };
+      };
 
       general = {
         sensitivity = 1.00;
@@ -131,7 +130,7 @@
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         # "WLR_NO_HARDWARE_CURSORS,1"
         "NIXOS_OZONE_WL,1"
-        ];
+      ];
 
       windowrule = [
         "float,Rofi"
