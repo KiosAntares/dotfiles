@@ -69,6 +69,7 @@ in {
     ./programs/broot/default.nix
     ./programs/bat/default.nix
     ./programs/rofi/default.nix
+    ./programs/fastfetch/default.nix
   ];
 
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -88,7 +89,6 @@ in {
     papirus-icon-theme
     breeze-gtk
     mangohud
-    fastfetch
     lxappearance
     gotop
 
