@@ -11,7 +11,6 @@
       profile = "gpu-hq";
       force-window = true;
       ytdl-format = "bestvideo+bestaudio";
-      cache-default = 4000000;
       scale = "ewa_lanczossharp";
       cscale = "ewa_lanczossharp";
       # hwdec = "auto-copy";

@@ -114,7 +114,7 @@ in {
       withOpenASAR = true;
       # withVencord = true;
     })
-    # inputs.nyaa.packages.x86_64-linux.default
+    inputs.nyaa.packages.x86_64-linux.default
 
     # CG
     krita
@@ -128,10 +128,10 @@ in {
     bottles
     wine-staging
     # lutris
-    sunshine
+    # sunshine
     prismlauncher
     ferium # cli mod manager
-    osu-lazer
+    # osu-lazer
 
     # Emulation
     # ryujinx

@@ -68,7 +68,7 @@ in {
       }
       telescope-manix
       undotree
-      tabular # Tabularize/align
+      # tabular # Tabularize/align
       vim-which-key # In-editor help for keybinds
       {
         # File explorer
