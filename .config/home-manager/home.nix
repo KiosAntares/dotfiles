@@ -83,6 +83,7 @@ in {
     grimblast
     foot
     gamescope
+    wlogout
 
     # Theming and aesthetic
     catppuccin-gtk
@@ -111,7 +112,7 @@ in {
     ncmpcpp
     vesktop
     (pkgs.discord.override {
-      withOpenASAR = true;
+      # withOpenASAR = true;
       # withVencord = true;
     })
     inputs.nyaa.packages.x86_64-linux.default
@@ -129,7 +130,9 @@ in {
     wine-staging
     # lutris
     # sunshine
-    prismlauncher
+    (pkgs.prismlauncher.override {
+      # withWaylandGLFW=true;
+    })
     ferium # cli mod manager
     # osu-lazer
 

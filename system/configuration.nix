@@ -16,6 +16,14 @@ in {
     "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
   ];
 
+  nix.settings.secret-key-files = "/root/cache-priv-key.pem";
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "-d";
+  };
+
   nixpkgs.config.packageOverrides = pkgs: {
     nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
       inherit pkgs;
@@ -23,15 +31,6 @@ in {
   };
 
   nixpkgs.overlays = [
-    (self: super: {
-      ffmpeg_5-full = super.ffmpeg_5-full.overrideAttrs (old: {
-        postFixup = ''
-          addOpenGLRunpath ${placeholder "lib"}/lib/libavcodec.so
-          addOpenGLRunpath ${placeholder "lib"}/lib/libavutil.so
-        '';
-      });
-    })
-
     (self: super: {
       discord-canary = super.discord-canary.override {withOpenASAR = true;};
       # discord = super.discord.override { withOpenASAR = true; };
@@ -45,6 +44,11 @@ in {
     ./cachix.nix
     aagl-gtk-on-nix.module
   ];
+
+  # services.clamav = {
+  #  daemon.enable = false;
+  #  updater.enable = true;
+  # };
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/NIXROOT";
@@ -93,23 +97,32 @@ in {
   fileSystems."/mnt/sssd" = {
     device = "/dev/disk/by-label/sssd";
     fsType = "btrfs";
-    options = ["ssd_spread" "noatime" "discard"];
+    options = ["ssd_spread" "noatime" "discard" "space_cache=v2" "compress=zstd" ];
   };
 
-  hardware.opengl = {
+  hardware.graphics= {
     enable = true;
-    driSupport = true;
+    # driSupport = true;
     extraPackages = with pkgs; [
     ];
   };
-  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    open = false;
+  };
   services.xserver.videoDrivers = ["nvidia"];
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="26ce", ATTRS{idProduct}=="01a2", ATTR{authorized}="0"
   '';
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot = {
+    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    extraModulePackages = [config.boot.kernelPackages.nvidia_x11_beta ];
+    initrd.kernelModules = ["nvidia"];
+
+  };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -127,9 +140,17 @@ in {
     }
   '';
 
-  networking.hostName = "main"; # Define your hostname.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-  networking.interfaces.enp5s0.wakeOnLan.enable = true;
+  networking = {
+    hostName = "main"; # Define your hostname.
+    networkmanager = {
+      enable = true; # Easiest to use and most distros use this by default.
+    };
+    interfaces.enp5s0.wakeOnLan.enable = true;
+  };
+
+
+
+
   zramSwap = {
     enable = true;
   };
@@ -163,16 +184,19 @@ in {
     ];
   };
 
-  environment.gnome.excludePackages = (with pkgs; [
+  environment.gnome.excludePackages = with pkgs; [
     gnome-photos
     gnome-tour
     gedit
-  ]) ++ (with pkgs.gnome; [
-    cheese # webcam tool
-    gnome-music
+    cheese
     gnome-terminal
     ghex
     rygel
+    epiphany
+    geary
+    evince
+    totem
+    gnome-music
     polari
     vinagre
     lightsoff
@@ -184,16 +208,12 @@ in {
     gnome-boxes
     quadrapassel
     gnome-taquin
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
     gnome-characters
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-  ]);
+    tali
+    iagno
+    hitori
+    atomix
+  ];
   services.xserver.desktopManager.gnome = {
     enable = true;
   };
@@ -206,6 +226,7 @@ in {
   # services.xserver.xkb.options = "caps:swapescape,altwin:swap_alt_win";
 
   programs.nano.enable = false;
+  programs.kdeconnect.enable = true;
 
   # TODO: re enable
   services.xserver.digimend.enable = true;
@@ -240,7 +261,6 @@ in {
   services.flatpak.enable = true;
 
   # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   services.pipewire = {
@@ -253,6 +273,11 @@ in {
     };
   };
   security.rtkit.enable = true;
+
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;
+  };
 
   services.xserver.displayManager.gdm = {
     enable = true;
@@ -274,7 +299,7 @@ in {
     packages = with pkgs; [
       appimage-run
       deluge
-      easyeffects
+      # easyeffects
       rime-data
       librime
       mono
@@ -286,12 +311,13 @@ in {
 
   programs.honkers-railway-launcher.enable = true;
   programs.anime-game-launcher.enable = true;
+  programs.sleepy-launcher.enable = true;
 
   programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    xwayland.enable = true;
-    # enableNvidiaPatches = true;
+     enable = true;
+     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+     xwayland.enable = true;
+     # enableNvidiaPatches = true;
   };
 
   fonts = {
@@ -354,7 +380,7 @@ in {
   environment.defaultPackages = with pkgs; [
     dotnet-sdk
     msbuild
-    ffmpeg_5-full
+    ffmpeg
     p7zip
     xorg.xkill
     vkBasalt
@@ -395,8 +421,8 @@ in {
     progress
     xdotool
     qt6.qtwayland
-    # xdg-desktop-portal-hyprland
     zig
+    screen
   ];
 
   documentation.dev.enable = true;
@@ -416,7 +442,12 @@ in {
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.jellyfin.enable = true;
+  services.jellyfin = {
+    enable = true;
+    group = "video";
+    openFirewall = true;
+  };
+
 
   systemd.services.mpd.environment = {
     XDG_RUNTIME_DIR = "/run/user/1000";

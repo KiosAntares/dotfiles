@@ -18,7 +18,7 @@
       exec = [
         "flameshot"
         "waybar"
-        "swww init"
+        "swww-daemon"
       ];
 
       input = {
@@ -33,13 +33,14 @@
         };
       };
 
-      cursors = {
-        no_hardware_cursor = true;
+      cursor = {
+          # no_hardware_cursor = true;
+          # allow_dumb_copy = true;
       };
 
       general = {
         sensitivity = 1.00;
-        no_cursor_warps = "0";
+        # no_cursor_warps = "0";
 
         gaps_in = 8;
         gaps_out = 8;
@@ -74,8 +75,9 @@
         "$mod,F,fullscreen,"
         "$mod,F2,exec,firefox"
         "$mod,F3,exec,telegram-desktop"
-        "$mod,F5,exec,discord"
+        "$mod,F5,exec,vesktop"
         "$mod,F8,exec,steam"
+        "$mod,X,exec,wlogout"
         "$mod SHIFT,S,exec,grimblast copy area"
         ",XF86MonBrightnessUp,exec,brightnessctl s +5"
         ",XF86MonBrightnessDown,exec,brightnessctl s 5-"

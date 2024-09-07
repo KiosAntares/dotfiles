@@ -14,7 +14,7 @@
         height = 16;
         modules-left = ["hyprland/workspaces" "hyprland/window"];
         modules-center = ["clock"];
-        modules-right = ["backlight" "custom/volumelabel" "pulseaudio/slider" "network" "battery"];
+        modules-right = ["backlight" "custom/volumelabel" "pulseaudio/slider" "memory" "cpu" "tray"]; 
 
         "network" = {
           format-wifi = "{icon} {essid}";
@@ -61,8 +61,18 @@
           orientation = "horizontal";
         };
 
+        "cpu" = {
+            format = "CPU {usage:2}%";
+            interval = 2;
+        };
+        
+        "memory" = {
+            format = "RAM {percentage:2}%";
+            interval = 2;
+        };
+
         "tray" = {
-          icon-size = 21;
+          icon-size = 18;
           spacing = 10;
         };
 

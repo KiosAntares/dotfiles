@@ -18,7 +18,7 @@
           {class = "^TelegramDesktop$";}
         ];
         "8" = [
-          {class = "^steam$";}
+          {class = "^steamwebhelper$";}
         ];
         "9" = [
           {class = "^obs$";}

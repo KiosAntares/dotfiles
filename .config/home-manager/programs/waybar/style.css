@@ -85,6 +85,14 @@
     padding: 0 5px;
 }
 
+#cpu {
+    padding: 0 10px;
+}
+
+#memory {
+    padding: 0 10px;
+}
+
 #battery icon {
     color: @red;
 }
