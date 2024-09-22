@@ -5,14 +5,15 @@
 }:
 python3Packages.buildPythonApplication rec {
   pname = "lyrics-in-terminal";
-  version = "1.5.0";
+  version = "1.7.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "Jugran";
     repo = pname;
     rev = version;
-    sha256 = "61l4W7X66WHm1k/M/JM55dNj+mMh4R9ohKbByk9dIVA=";
+    # sha256 = "61l4W7X66WHm1k/M/JM55dNj+mMh4R9ohKbByk9dIVA=";
+    hash = "sha512-aASEU7x2o4gGC7B0mSIvCjyhkOnz1mqhCp5QjLf9izrBGPKBC3+KyEt9rBtca0tyekqoeMABGgqM2ZIJUVu+AQ=="; 
   };
 
   dontUseCmakeConfigure = true;
@@ -20,6 +21,7 @@ python3Packages.buildPythonApplication rec {
   propagatedBuildInputs = [
     python3Packages.dbus-python
     python3Packages.mpd2
+    python3Packages.requests
   ];
 
   preBuild = ''
@@ -30,6 +32,7 @@ python3Packages.buildPythonApplication rec {
     python3Packages.setuptools
     python3Packages.dbus-python
     python3Packages.mpd2
+    python3Packages.requests
   ];
 
   meta = with lib; {

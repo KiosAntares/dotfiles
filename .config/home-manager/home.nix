@@ -14,14 +14,10 @@ in {
     };
   };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
 
   nixpkgs.overlays = [
-    (import ./packages)
+      (import ./packages)
+      inputs.nur.overlay
   ];
 
   fonts.fontconfig = {
@@ -141,5 +137,6 @@ in {
     pcsx2
     # rpcs3
     dolphin-emu
+    tigervnc
   ];
 }

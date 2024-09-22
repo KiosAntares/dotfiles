@@ -14,6 +14,7 @@
     };
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     catppuccin.url = "github:catppuccin/nix";
+    nur.url = "github:nix-community/NUR";
   };
 
   outputs = {
