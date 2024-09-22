@@ -2,11 +2,9 @@
   config,
   pkgs,
   inputs,
-  home-manager,
   ...
-}: let
-  aagl-gtk-on-nix = import (builtins.fetchTarball "https://github.com/ezKEa/aagl-gtk-on-nix/archive/main.tar.gz");
-in {
+}:
+{
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -24,25 +22,20 @@ in {
     options = "-d";
   };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
-  };
-
   nixpkgs.overlays = [
     (self: super: {
       discord-canary = super.discord-canary.override {withOpenASAR = true;};
       # discord = super.discord.override { withOpenASAR = true; };
     })
+    inputs.nur.overlay
   ];
 
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    <home-manager/nixos>
+    inputs.home-manager.nixosModules.home-manager
     ./cachix.nix
-    aagl-gtk-on-nix.module
+    inputs.aagl-gtk-on-nix.nixosModules.default
   ];
 
   # services.clamav = {
