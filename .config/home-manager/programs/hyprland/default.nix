@@ -39,7 +39,7 @@
       };
 
       general = {
-        sensitivity = 1.00;
+        # sensitivity = 1.00;
         # no_cursor_warps = "0";
 
         gaps_in = 8;

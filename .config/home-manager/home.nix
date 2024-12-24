@@ -17,20 +17,19 @@ in {
 
   nixpkgs.overlays = [
       (import ./packages)
-      inputs.nur.overlay
+      inputs.nur.overlays.default
   ];
 
   fonts.fontconfig = {
     enable = true;
   };
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "25.05";
 
   programs.home-manager.enable = true;
 
   gtk = {
     enable = true;
-    catppuccin.enable = true;
     #theme = {
     #  package = pkgs.catppuccin-gtk;
     #  name = "Catppuccin-Frappe-Standard-Blue-Dark";
@@ -40,6 +39,12 @@ in {
   catppuccin = {
     enable = true;
     flavor = "mocha";
+    zathura.enable = true;
+    rofi.enable = true;
+    mpv.enable = true;
+    kitty.enable = true;
+    gtk.enable = true;
+    bat.enable = true;
   };
 
   dconf.settings = {
@@ -93,6 +98,7 @@ in {
     flameshot
     feh
     nitrogen
+    tigervnc
 
     #Important
     tdesktop
@@ -104,28 +110,19 @@ in {
     davis
     lyrics-in-terminal
     libreoffice-qt
-    # motrix
-    ncmpcpp
     vesktop
-    (pkgs.discord.override {
-      # withOpenASAR = true;
-      # withVencord = true;
-    })
     inputs.nyaa.packages.x86_64-linux.default
+    speedtest-cli
 
     # CG
     krita
     inkscape
-    # darktable
-    davinci-resolve
 
     # Gaming and compatibility
     heroic
     legendary-gl
     bottles
     wine-staging
-    # lutris
-    # sunshine
     (pkgs.prismlauncher.override {
       # withWaylandGLFW=true;
     })
@@ -137,6 +134,5 @@ in {
     pcsx2
     # rpcs3
     dolphin-emu
-    tigervnc
   ];
 }
