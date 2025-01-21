@@ -27,7 +27,7 @@
       discord-canary = super.discord-canary.override {withOpenASAR = true;};
       # discord = super.discord.override { withOpenASAR = true; };
     })
-    inputs.nur.overlay
+    inputs.nur.overlays.default
   ];
 
   imports = [
@@ -60,15 +60,15 @@
     fsType = "vfat";
   };
 
-  fileSystems."/mnt/2TB_SG" = {
-    device = "/dev/disk/by-label/2TB_SG";
-    fsType = "btrfs";
-    options = [
-      "compress=zstd"
-      "noatime"
-      "nofail"
-    ];
-  };
+  # fileSystems."/mnt/2TB_SG" = {
+  #   device = "/dev/disk/by-label/2TB_SG";
+  #   fsType = "btrfs";
+  #   options = [
+  #     "compress=zstd"
+  #     "noatime"
+  #     "nofail"
+  #   ];
+  # };
   fileSystems."/mnt/External" = {
     device = "/dev/disk/by-uuid/6CF62BCCF62B94FC";
     fsType = "ntfs-3g";
@@ -87,11 +87,18 @@
     ];
   };
 
-  fileSystems."/mnt/sssd" = {
+    fileSystems."/mnt/sssd" = {
     device = "/dev/disk/by-label/sssd";
     fsType = "btrfs";
     options = ["ssd_spread" "noatime" "discard" "space_cache=v2" "compress=zstd" ];
   };
+  
+
+  fileSystems."/mnt/server" = {
+    device = "192.168.1.200:/data";
+    fsType = "nfs";
+  };
+
 
   hardware.graphics= {
     enable = true;
@@ -119,6 +126,7 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
+  boot.loader.grub.configurationLimit = 2;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
@@ -191,7 +199,6 @@
     totem
     gnome-music
     polari
-    vinagre
     lightsoff
     aisleriot
     swell-foop
@@ -221,8 +228,11 @@
   programs.nano.enable = false;
   programs.kdeconnect.enable = true;
 
-  # TODO: re enable
-  services.xserver.digimend.enable = true;
+  # services.xserver.digimend.enable = true;
+  hardware.opentabletdriver = {
+    enable = true;
+    daemon.enable = true;
+  };
 
   # Enable CUPS to print documents.
   services.printing = {
@@ -241,16 +251,21 @@
     openFirewall = true;
   };
 
-  xdg.portal = {
+  programs.appimage = {
     enable = true;
-    wlr.enable = true;
-    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config = {
-      common = {
-        default = ["gtk"];
-      };
-    };
+    binfmt = true;
   };
+
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #   config = {
+  #     common = {
+  #       default = ["gtk"];
+  #     };
+  #   };
+  # };
   services.flatpak.enable = true;
 
   # Enable sound.
@@ -266,11 +281,6 @@
     };
   };
   security.rtkit.enable = true;
-
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;
-  };
 
   services.xserver.displayManager.gdm = {
     enable = true;
@@ -316,7 +326,9 @@
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      (nerdfonts.override {fonts = ["CascadiaCode" "Tinos" "VictorMono"];})
+      nerd-fonts.caskaydia-cove
+      nerd-fonts.tinos
+      nerd-fonts.victor-mono
       corefonts
       # babelstone-han
       source-han-sans
@@ -371,8 +383,9 @@
     services.dbus.enable = true;
   # List packages installed in system profile. To search, run:
   environment.defaultPackages = with pkgs; [
-    dotnet-sdk
-    msbuild
+    dotnetCorePackages.sdk_9_0
+    dotnetCorePackages.runtime_9_0
+    # msbuild
     ffmpeg
     p7zip
     xorg.xkill
@@ -416,6 +429,7 @@
     qt6.qtwayland
     zig
     screen
+    kdiskmark
   ];
 
   documentation.dev.enable = true;
@@ -474,5 +488,5 @@
     enable = true;
   };
 
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 }

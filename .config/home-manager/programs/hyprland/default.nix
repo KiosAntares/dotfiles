@@ -11,13 +11,13 @@
       "$mod" = "MOD4";
 
       monitor = [
-        "DP4,2560x1440@75,1920x0,1"
-        "HDMI-0,1920x1080@60,0x360,1"
+        "DP-2,2560x1440@75,1920x0,1"
+        "HDMI-A-1,1920x1080@60,0x360,1"
       ];
 
       exec = [
-        "flameshot"
-        "waybar"
+        # "flameshot"
+        "waybar &"
         "swww-daemon"
       ];
 
@@ -132,6 +132,7 @@
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         # "WLR_NO_HARDWARE_CURSORS,1"
         "NIXOS_OZONE_WL,1"
+        "QT_QPA_PLATFORM,xcb"
       ];
 
       windowrule = [
