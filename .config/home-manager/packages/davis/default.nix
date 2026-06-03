@@ -16,5 +16,9 @@ rustPlatform.buildRustPackage rec {
     sha256 = "Xw4X9n0PCuigZhBA6so8pVI26pLRGeGjtR0l7uHw1vA=";
   };
 
-  cargoSha256 = "sha256-gpxcJbl2FrWjsPUi/BBZ/uyoVxmbBlXT7KYbESpI1+I=";
+  cargoHash = "sha256-6VpPnRHcpBGen+cOnkG2CCkZQkUH96wu/0oxJPRYm2Q=";
+  
+  postFixUp = ''
+      wrapProgram $out/bin/davis \ --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.imagemagick ]}
+  '';
 }

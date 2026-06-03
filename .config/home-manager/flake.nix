@@ -15,6 +15,11 @@
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     catppuccin.url = "github:catppuccin/nix";
     nur.url = "github:nix-community/NUR";
+
+    zen-browser.url = "github:youwen5/zen-browser-flake";
+    zen-browser.inputs.nixpkgs.follows = "nixpkgs";
+
+    # hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = {
@@ -23,6 +28,7 @@
     home-manager,
     spicetify-nix,
     catppuccin,
+    zen-browser,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -43,7 +49,7 @@
       modules = [
         ./home.nix
         ./programs/spotify/default.nix
-        catppuccin.homeManagerModules.catppuccin
+        catppuccin.homeModules.catppuccin
       ];
 
       # Optionally use extraSpecialArgs

@@ -27,6 +27,8 @@ nnoremap <C-c>P "+P
 vnoremap <C-c>p "+p
 vnoremap <C-c>P "+P
 
+nnoremap WW :update
+
 " Movement and deletion
 inoremap <C-d> <C-o>de
 

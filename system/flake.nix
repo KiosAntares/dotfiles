@@ -1,14 +1,16 @@
 {
-  # inputs.hyprland.url = "github:hyprwm/Hyprland?submodules=1";
-  inputs.hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+  # inputs.hyprland.url = "github:hyprwm/Hyprland";
+  # inputs.hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   # inputs.nixpkgs.url = "github:NixOS/nixpkgs";
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
+  # inputs.nixpkgs.url = "nixpkgs/nixos-25.05";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.aagl-gtk-on-nix = {
     url = "github:ezKEa/aagl-gtk-on-nix";
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nur.url = "github:nix-community/NUR";
+  # inputs.comfyui-nix.url = "github:utensils/comfyui-nix";
 
 
   outputs = { self, nixpkgs, ... } @ inputs: {

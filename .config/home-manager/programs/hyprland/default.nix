@@ -2,23 +2,34 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: {
   wayland.windowManager.hyprland = {
     enable = true;
+    # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+
+    # configType = "hyprlang";
+
     plugins = [];
     settings = {
-      "$mod" = "MOD4";
+      "mod" = "MOD4";
 
       monitor = [
         "DP-2,2560x1440@75,1920x0,1"
-        "HDMI-A-1,1920x1080@60,0x360,1"
+        # "HDMI-A-1,1920x1080@60,0x360,1"
+        "HDMI-A-1,1920x1080@60,0x0,1"
       ];
+
+      debug = {
+        disable_logs = false;
+      };
 
       exec = [
         # "flameshot"
         "waybar &"
-        "swww-daemon"
+        "awww-daemon"
       ];
 
       input = {
@@ -56,93 +67,94 @@
         # blur_passes = 2;
       };
 
-      animations = {
-        enabled = 1;
-        animation = [
-          "windows,1,5,overshot,slide"
-          "workspaces,1,6,overshot"
-        ];
-      };
+      # animations = {
+      #   enabled = 1;
+      #   animation = [
+      #     "windows,1,5,overshot,slide"
+      #     "workspaces,1,6,overshot"
+      #   ];
+      # };
 
-      dwindle = {
-        pseudotile = 0;
-      };
+      # dwindle = {
+      #   pseudotile = 0;
+      # };
 
       bind = [
-        "$mod,Return,exec,kitty"
-        "$mod SHIFT,Q,killactive,"
-        "$mod,D,exec,rofi -show run"
-        "$mod,F,fullscreen,"
-        "$mod,F2,exec,firefox"
-        "$mod,F3,exec,telegram-desktop"
-        "$mod,F5,exec,vesktop"
-        "$mod,F8,exec,steam"
-        "$mod,X,exec,wlogout"
-        "$mod SHIFT,S,exec,grimblast copy area"
+        "MOD4,Return,exec,kitty" 
+        "MOD4 SHIFT,Q,killactive,"
+        "MOD4,D,exec,rofi -show run"
+        "MOD4,F,fullscreen,"
+        "MOD4 SHIFT,Space,togglefloating" 
+        "MOD4,F2,exec,zen"
+        "MOD4,F3,exec,Telegram"
+        "MOD4,F5,exec,vesktop"
+        "MOD4,F8,exec,steam"
+        "MOD4,X,exec,wlogout"
+        "MOD4 SHIFT,S,exec,grimblast copy area"
         ",XF86MonBrightnessUp,exec,brightnessctl s +5"
         ",XF86MonBrightnessDown,exec,brightnessctl s 5-"
 
-        "$mod,1,workspace,1"
-        "$mod,2,workspace,2"
-        "$mod,3,workspace,3"
-        "$mod,4,workspace,4"
-        "$mod,5,workspace,5"
-        "$mod,6,workspace,6"
-        "$mod,7,workspace,7"
-        "$mod,8,workspace,8"
-        "$mod,9,workspace,9"
-        "$mod,0,workspace,10"
+        "MOD4,1,workspace,1"
+        "MOD4,2,workspace,2"
+        "MOD4,3,workspace,3"
+        "MOD4,4,workspace,4"
+        "MOD4,5,workspace,5"
+        "MOD4,6,workspace,6"
+        "MOD4,7,workspace,7"
+        "MOD4,8,workspace,8"
+        "MOD4,9,workspace,9"
+        "MOD4,0,workspace,10"
 
-        "$mod SHIFT,1,movetoworkspacesilent,1"
-        "$mod SHIFT,2,movetoworkspacesilent,2"
-        "$mod SHIFT,3,movetoworkspacesilent,3"
-        "$mod SHIFT,4,movetoworkspacesilent,4"
-        "$mod SHIFT,5,movetoworkspacesilent,5"
-        "$mod SHIFT,6,movetoworkspacesilent,6"
-        "$mod SHIFT,7,movetoworkspacesilent,7"
-        "$mod SHIFT,8,movetoworkspacesilent,8"
-        "$mod SHIFT,9,movetoworkspacesilent,9"
-        "$mod SHIFT,0,movetoworkspacesilent,10"
+        "MOD4 SHIFT,1,movetoworkspacesilent,1"
+        "MOD4 SHIFT,2,movetoworkspacesilent,2"
+        "MOD4 SHIFT,3,movetoworkspacesilent,3"
+        "MOD4 SHIFT,4,movetoworkspacesilent,4"
+        "MOD4 SHIFT,5,movetoworkspacesilent,5"
+        "MOD4 SHIFT,6,movetoworkspacesilent,6"
+        "MOD4 SHIFT,7,movetoworkspacesilent,7"
+        "MOD4 SHIFT,8,movetoworkspacesilent,8"
+        "MOD4 SHIFT,9,movetoworkspacesilent,9"
+        "MOD4 SHIFT,0,movetoworkspacesilent,10"
 
-        "$mod,h,movefocus,l"
-        "$mod,l,movefocus,r"
-        "$mod,k,movefocus,u"
-        "$mod,j,movefocus,d"
-        "$mod SHIFT,h,movewindow,l"
-        "$mod SHIFT,l,movewindow,r"
-        "$mod SHIFT,k,movewindow,u"
-        "$mod SHIFT,j,movewindow,d"
-        "$mod CONTROL,h,workspace,-1"
-        "$mod CONTROL,l,workspace,+1"
-        "$mod CONTROL,k,focusmonitor,l"
-        "$mod CONTROL,j,focusmonitor,r"
-        "$mod ALT,h,splitratio,-0.1"
-        "$mod ALT,l,splitratio,+0.1"
+        "MOD4,h,movefocus,l"
+        "MOD4,l,movefocus,r"
+        "MOD4,k,movefocus,u"
+        "MOD4,j,movefocus,d"
+        "MOD4 SHIFT,h,movewindow,l"
+        "MOD4 SHIFT,l,movewindow,r"
+        "MOD4 SHIFT,k,movewindow,u"
+        "MOD4 SHIFT,j,movewindow,d"
+        "MOD4 CONTROL,h,workspace,-1"
+        "MOD4 CONTROL,l,workspace,+1"
+        "MOD4 CONTROL,k,focusmonitor,l"
+        "MOD4 CONTROL,j,focusmonitor,r"
+        # "MOD4 ALT,h,splitratio,-0.1"
+        # "MOD4 ALT,l,splitratio,+0.1"
       ];
 
       bindm = [
-        "$mod,mouse:272,movewindow"
-        "$mod,mouse:273,resizewindow"
+        "MOD4,mouse:272,movewindow"
+        "MOD4,mouse:273,resizewindow"
       ];
 
       env = [
-        "LIBVA_DRIVER_NAME,nvidia"
+        # "LIBVA_DRIVER_NAME,nvidia"
         "XDG_SESSION_TYPE,wayland"
-        "GBM_BACKEND,nvidia-drm"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        # "GBM_BACKEND,nvidia-drm"
+        # "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         # "WLR_NO_HARDWARE_CURSORS,1"
         "NIXOS_OZONE_WL,1"
         "QT_QPA_PLATFORM,xcb"
       ];
 
       windowrule = [
-        "float,Rofi"
+        # "float,Rofi"
       ];
 
-      bezier = [
-        "slow,0,0.85,0.3,1"
-        "overshot,0.7,0.6,0.1,1.1"
-      ];
+      # bezier = [
+      #   "slow,0,0.85,0.3,1"
+      #   "overshot,0.7,0.6,0.1,1.1"
+      # ];
     };
     systemd.enable = true;
     xwayland.enable = true;

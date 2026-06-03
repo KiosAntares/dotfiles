@@ -5,11 +5,14 @@
   ...
 }: {
   programs.firefox = {
-    enable = true;
-    profiles.kios = {
+      enable = true;
+      profiles.default.id = 100;
+      profiles.default.extensions.force = true;
+      profiles.kios = {
       isDefault = true;
       name = "kios";
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions.force = true;
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
         vimium
         bitwarden
@@ -21,7 +24,7 @@
         stylus
         inkah
         consent-o-matic
-        enhancer-for-youtube
+        # enhancer-for-youtube
         augmented-steam
         # bypass-paywalls-clean
         reddit-enhancement-suite
@@ -45,7 +48,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/favicon.c09fe1a1.ico";
+            icon = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/favicon.c09fe1a1.ico";
             updateInterval = 24 * 60 * 60 * 1000;
             definedAliases = ["@b" "@brave"];
           };
@@ -98,19 +101,19 @@
 
           "NixOS Wiki" = {
             urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
-            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            icon = "https://nixos.wiki/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000; # every day
             definedAliases = ["@nixwiki"];
           };
 
           "Genius" = {
             urls = [{template = "https://genius.com/search?q={searchTerms}";}];
-            iconUpdateURL = "https://genius.com/favicon.png";
+            icon = "https://genius.com/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000; # every day
             definedAliases = ["@gen"];
           };
-          "Bing".metaData.hidden = true;
-          "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+          "bing".metaData.hidden = true;
+          "google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
         };
       };
     };

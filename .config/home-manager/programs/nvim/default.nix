@@ -22,7 +22,8 @@ in {
     enable = true;
     viAlias = true;
     vimAlias = true;
-    # withPython3 = true;
+    withPython3 = true;
+    withRuby = true;
     withNodeJs = true;
 
     # read in the vim config from filesystem
@@ -33,7 +34,7 @@ in {
       luajit
       tree-sitter
       pyright
-      ccls
+      # ccls
       lua-language-server
       rust-analyzer
       imagemagick
@@ -46,116 +47,56 @@ in {
       luaps.luarocks
     ];
 
-    extraLuaConfig = builtins.readFile ./config.lua;
+    initLua = builtins.readFile ./config.lua;
 
     plugins = with pkgs.vimPlugins; [
       # you can use plugins from the pkgs
 
-      # UI/UX
-      lualine-nvim # Fast status line
+      lualine-nvim
       catppuccin-nvim # Color theme
       {
         # Tabs
         plugin = barbar-nvim;
-        type = "lua";
         config = ''require("barbar").setup()'';
       }
+      nvim-web-devicons
       {
         # Fzf and utilities
         plugin = telescope-nvim;
-        type = "lua";
         config = ''require("telescope").setup()'';
       }
-      telescope-manix
-      undotree
-      # tabular # Tabularize/align
-      vim-which-key # In-editor help for keybinds
       {
         # File explorer
         plugin = nvim-tree-lua;
-        type = "lua";
         config = ''require("nvim-tree").setup()'';
       }
-      symbols-outline-nvim # Tree view of symbols
-      ale # Async linting and error checking
+      symbols-outline-nvim
       {
         # LSP-based surround of elements
         plugin = nvim-surround;
-        type = "lua";
         config = ''require("nvim-surround").setup({})'';
       }
-
+        
       # Syntax highlighting and language support
-      {
-        plugin = nvim-treesitter.withPlugins (p:
-          with p; [
-            # AllGrammars
-            tree-sitter-norg
-            tree-sitter-norg-meta
-          ]);
-        # plugin = nvim-treesitter.withAllGrammars;
-        type = "lua";
-        config = ''
-          require("nvim-treesitter.configs").setup {
-              auto_install = false,
-              -- ensure_installed = { 'norg' },
-              highlight = {
-                  enable = true,
-              },
-              -- parser_install_dir = "/home/kios/parsers-temp"
-            }
-        '';
-      }
-      vim-polyglot # Multi language highlighting
-      zig-vim
-      vim-svelte
-      vim-css-color
-      csv-vim
-      vim-fish
-      vimtex
-      vim-devicons
-      nvim-web-devicons
+      nvim-treesitter.withAllGrammars
       {
         plugin = image-nvim;
-        type = "lua";
         config = ''require("image").setup({})'';
       }
 
-      # Org like tool
-      nui-nvim
-      plenary-nvim
-      nvim-nio
-      {
-        plugin = neorg;
-        type = "lua";
-        config = builtins.readFile ./plugins/neorg.lua;
-      }
-      neorg-telescope
-      nvim-treesitter.builtGrammars.tree-sitter-norg
-      # nvim-treesitter.builtGrammars.tree-sitter-norg-meta
-
       # Autocomplete
-      luasnip
-      cmp-buffer
-      cmp-path
-      cmp-cmdline
-      cmp_luasnip
-
       {
         plugin = nvim-lspconfig;
-        type = "lua";
         config = builtins.readFile ./plugins/lspconfig.lua;
       }
 
       {
         plugin = nvim-cmp;
-        type = "lua";
         config = builtins.readFile ./plugins/cmp.lua;
       }
 
       {
         plugin = cmp-nvim-lsp;
-        type = "lua";
         config = ''
             -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
           local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -175,11 +116,10 @@ in {
 
       {
         plugin = neodev-nvim;
-        type = "lua";
         config = builtins.readFile ./plugins/neodev.lua;
       }
 
-      (plugin "lyuts/vim-rtags")
+      # (plugin "lyuts/vim-rtags")
     ];
 
     extraConfig = builtins.concatStringsSep "\n" [

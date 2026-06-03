@@ -8,18 +8,35 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-substituters = ["https://ai.cachix.org" "https://hyprland.cachix.org" ];
-  nix.settings.trusted-public-keys = [
-    "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
-    "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-  ];
+  # nix.settings.trusted-substituters = ["https://ai.cachix.org" "https://hyprland.cachix.org" ];
+  #nix.settings.trusted-public-keys = [
+  #  "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+  #  "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+  # ];
 
   nix.settings.secret-key-files = "/root/cache-priv-key.pem";
   nix.settings.auto-optimise-store = true;
+  nix.settings.download-buffer-size = 524288000;
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "-d";
+  };
+
+  # hardware.fancontrol.enable = true;
+  hardware.fancontrol.config = ''
+    INTERVAL=10
+FCTEMPS=hwmon0/device/pwm1=hwmon0/device/temp1_input
+FCFANS=hwmon0/device/pwm1=hwmon0/device/fan1_input
+MINTEMP=40
+MAXTEMP=60
+  '';
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
   };
 
   nixpkgs.overlays = [
@@ -28,6 +45,7 @@
       # discord = super.discord.override { withOpenASAR = true; };
     })
     inputs.nur.overlays.default
+    # inputs.comfyui-nix.overlays.default
   ];
 
   imports = [
@@ -36,6 +54,7 @@
     inputs.home-manager.nixosModules.home-manager
     ./cachix.nix
     inputs.aagl-gtk-on-nix.nixosModules.default
+    # inputs.comfyui-nix.nixosModules.default
   ];
 
   # services.clamav = {
@@ -60,23 +79,14 @@
     fsType = "vfat";
   };
 
-  # fileSystems."/mnt/2TB_SG" = {
-  #   device = "/dev/disk/by-label/2TB_SG";
-  #   fsType = "btrfs";
+  # fileSystems."/mnt/External" = {
+  #   device = "/dev/disk/by-uuid/6CF62BCCF62B94FC";
+  #   fsType = "ntfs-3g";
   #   options = [
-  #     "compress=zstd"
   #     "noatime"
-  #     "nofail"
+  #     "big_writes"
   #   ];
   # };
-  fileSystems."/mnt/External" = {
-    device = "/dev/disk/by-uuid/6CF62BCCF62B94FC";
-    fsType = "ntfs-3g";
-    options = [
-      "noatime"
-      "big_writes"
-    ];
-  };
 
   fileSystems."/mnt/1TB_SG" = {
     device = "/dev/disk/by-label/1TB_SG";
@@ -88,39 +98,56 @@
   };
 
     fileSystems."/mnt/sssd" = {
-    device = "/dev/disk/by-label/sssd";
-    fsType = "btrfs";
-    options = ["ssd_spread" "noatime" "discard" "space_cache=v2" "compress=zstd" ];
+    device = "/dev/disk/by-label/bssd";
+    fsType = "ext4";
+    options = ["noatime"];
   };
   
 
   fileSystems."/mnt/server" = {
-    device = "192.168.1.200:/data";
+    device = "192.168.1.200:/data/media";
     fsType = "nfs";
   };
 
 
   hardware.graphics= {
     enable = true;
+    # package = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system}.mesa.drivers;
     # driSupport = true;
     extraPackages = with pkgs; [
     ];
+    extraPackages32 = with pkgs; [
+    ];
+    enable32Bit = true;
   };
-  hardware.nvidia = {
-    modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-    open = false;
+
+  hardware.amdgpu = {
+  	opencl.enable = true;
+	overdrive.enable = true;
+	# zluda.enable = true;
   };
-  services.xserver.videoDrivers = ["nvidia"];
+
+  # hardware.nvidia = {
+  #   modesetting.enable = true;
+  #   # package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+  #   open = false;
+  # };
+  # services.xserver.videoDrivers = ["nvidia"];
 
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="26ce", ATTRS{idProduct}=="01a2", ATTR{authorized}="0"
+    # Joy-Con L (Bluetooth)
+    KERNEL=="hidraw*", KERNELS=="*057e:2006*", MODE="0660", TAG+="uaccess"
+    # Joy-Con R (Bluetooth)
+    KERNEL=="hidraw*", KERNELS=="*057e:2007*", MODE="0660", TAG+="uaccess"
+    # Joy-Con Charging Grip (USB)
+    KERNEL=="hidraw*", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="200e", MODE="0660", TAG+="uaccess"
   '';
 
   boot = {
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
-    extraModulePackages = [config.boot.kernelPackages.nvidia_x11_beta ];
-    initrd.kernelModules = ["nvidia"];
+    # extraModulePackages = [config.hardware.nvidia.package ];
+    # initrd.kernelModules = ["nvidia"];
 
   };
 
@@ -131,7 +158,8 @@
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.loader.grub.device = "nodev"; # or "nodev" for efi only
-  boot.loader.grub.theme = "/opt/catppuccin-mocha-grub-theme/theme.txt";
+  boot.loader.grub.theme = "${pkgs.catppuccin-grub}";
+  boot.loader.grub.gfxmodeEfi = "1024x768";
   boot.loader.grub.extraEntries = ''
     menuentry "Windows 11" --class windows --class os $menuentry_id_option 'osprober-efi-BC5D-6FA0' {
     insmod part_gpt
@@ -145,8 +173,15 @@
     hostName = "main"; # Define your hostname.
     networkmanager = {
       enable = true; # Easiest to use and most distros use this by default.
+      # dns = "none";
     };
+    # nameservers = [ "127.0.0.1" "::1" ];
     interfaces.enp5s0.wakeOnLan.enable = true;
+    extraHosts = ''
+      192.168.1.200 serv
+      192.168.1.200 serv.local
+      192.168.1.53 laptop
+      '';
   };
 
 
@@ -176,9 +211,9 @@
 
   services.xserver.windowManager.i3 = {
     enable = true;
-    package = pkgs.i3-gaps;
+    # package = pkgs.i3-gaps;
     extraPackages = with pkgs; [
-      polybarFull
+      # polybarFull
       rofi
       kitty
       xclip
@@ -214,8 +249,8 @@
     hitori
     atomix
   ];
-  services.xserver.desktopManager.gnome = {
-    enable = true;
+  services.desktopManager.gnome = {
+    enable = false;
   };
 
   # Configure keymap in X11
@@ -234,6 +269,10 @@
     daemon.enable = true;
   };
 
+  services.joycond = {
+    enable = true;
+  };
+
   # Enable CUPS to print documents.
   services.printing = {
     enable = true;
@@ -241,9 +280,15 @@
   };
 
   hardware.sane = {
-    enable = true;
-    extraBackends = [pkgs.hplipWithPlugin];
+    enable = false;
+    # extraBackends = [ pkgs.hplipWithPlugin pkgs.epkowa pkgs.utsushi ];
+    # drivers.scanSnap.enable = true;
   };
+
+  # nixpkgs.config.sane.snapscanFirmware = pkgs.fetchurl {
+  #   url = "https://media-cdn.ubuntu-de.org/wiki/attachments/52/46/Esfw41.bin"; #Epson Perfection 2480
+  #   sha256 = "00cv25v4xlrgp3di9bdfd07pffh9jq2j0hncmjv3c65m8bqhjglq";
+  # };
 
   services.avahi = {
     enable = true;
@@ -251,10 +296,16 @@
     openFirewall = true;
   };
 
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
+  #programs.appimage = {
+  #  enable = true;
+  #  binfmt = true;
+  # };
+
+
+  programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  users.groups.libvirtd.members = ["kios"];
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # xdg.portal = {
   #   enable = true;
@@ -266,11 +317,11 @@
   #     };
   #   };
   # };
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
 
   # Enable sound.
-  hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
+  services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     audio.enable = true;
@@ -279,13 +330,27 @@
       enable = true;
       support32Bit = true;
     };
+    extraConfig.pipewire = {
+      "10-clock-rate" = {
+        "context.properties" = {
+          "default.clock.allowed-rates" = [48000 96000 192000];
+        };
+      };
+    };
   };
+
   security.rtkit.enable = true;
 
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    wayland = true;
+  services.displayManager.gdm = {
+    # enable = true;
+    # wayland = true;
   };
+
+  services.displayManager.ly= {
+      enable = true;
+      # settings.remember = true;
+  };
+
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   services.systembus-notify.enable = true;
@@ -298,7 +363,7 @@
   users.defaultUserShell = pkgs.fish;
   users.users.kios = {
     isNormalUser = true;
-    extraGroups = ["wheel" "scanner" "lp" "video"]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel" "scanner" "lp" "video" "tty" "dialout" "seat"]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       appimage-run
       deluge
@@ -307,20 +372,38 @@
       librime
       mono
       pavucontrol
-      lutris
+      pwvucontrol
+      # lutris
+      (pkgs.lutris.override {
+  # Intercept buildFHSEnv to modify target packages
+  buildFHSEnv = args: pkgs.buildFHSEnv (args // {
+    multiPkgs = envPkgs:
+      let
+        # Fetch original package list
+        originalPkgs = args.multiPkgs envPkgs;
+
+        # Disable tests for openldap
+        customLdap = envPkgs.openldap.overrideAttrs (_: { doCheck = false; });
+      in
+      # Replace broken openldap with the custom one
+      builtins.filter (p: (p.pname or "") != "openldap") originalPkgs ++ [ customLdap ];
+  });
+})
+      vkd3d-proton
       yadm
     ];
   };
 
-  programs.honkers-railway-launcher.enable = true;
-  programs.anime-game-launcher.enable = true;
-  programs.sleepy-launcher.enable = true;
+  # programs.honkers-railway-launcher.enable = true;
+  # programs.anime-game-launcher.enable = true;
+  # programs.sleepy-launcher.enable = true;
 
   programs.hyprland = {
      enable = true;
-     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
      xwayland.enable = true;
      # enableNvidiaPatches = true;
+     # package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+     # portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   fonts = {
@@ -339,6 +422,7 @@
 
   programs.steam = {
     enable = true;
+    protontricks.enable = true;
   };
 
   programs.gamemode = {
@@ -363,7 +447,6 @@
     ];
   };
 
-  users.users.jellyfin.extraGroups = ["video"];
 
   qt.platformTheme = "gtk3";
 
@@ -386,11 +469,12 @@
     dotnetCorePackages.sdk_9_0
     dotnetCorePackages.runtime_9_0
     # msbuild
-    ffmpeg
+    ffmpeg-full
     p7zip
-    xorg.xkill
-    vkBasalt
-    wine
+    xkill
+    vkbasalt
+    lsfg-vk
+    # wine
   ];
 
   environment.systemPackages = with pkgs; [
@@ -416,6 +500,7 @@
     usbutils
     calc
     zip
+    # xsane
     mediainfo
     lsof
     rsync
@@ -430,7 +515,14 @@
     zig
     screen
     kdiskmark
+    dig
+    nh
+    nix-output-monitor
+    lsfg-vk-ui
+    imagemagick
   ];
+
+  services.udev.packages = [pkgs.via];
 
   documentation.dev.enable = true;
 
@@ -446,34 +538,56 @@
     up = "cd ..";
   };
 
+  
+
+
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   services.jellyfin = {
-    enable = true;
+    # enable = true;
     group = "video";
     openFirewall = true;
   };
-
+  # users.users.jellyfin.extraGroups = ["video"];
 
   systemd.services.mpd.environment = {
     XDG_RUNTIME_DIR = "/run/user/1000";
   };
 
-  services.mpd = {
-    enable = true;
-    user = "kios";
-    dbFile = "/home/kios/.config/mpd/mpd.db";
-    dataDir = "/home/kios/.config/mpd";
-    playlistDirectory = "/home/kios/.config/mpd/playlists";
-    musicDirectory = "/mnt/2TB_SG/Media/Music";
-    extraConfig = ''
-      audio_output {
-        type "pipewire"
-      name "Pipewire"
-      }
-    '';
-  };
+
+  # services.comfyui = {
+  #   enable = true;
+  #   cuda = true;  # Enable NVIDIA GPU acceleration (recommended for most users)
+  #   # cudaCapabilities = [ "8.9" ];  # Optional: optimize system CUDA packages for RTX 40xx
+  #   #   Note: Pre-built PyTorch wheels already support all GPU architectures
+  #   enableManager = true;  # Enable the built-in ComfyUI Manager
+  #   port = 8188;
+  #   listenAddress = "127.0.0.1";  # Use "0.0.0.0" for network access
+  #   dataDir = "/mnt/sssd/AI/comfyui-data";
+  #   openFirewall = false;
+  #   extraArgs = [ "--lowvram" "--force-fp16" "--use-pytorch-cross-attention" ];
+  #   # environment = { };
+  # };
+
+  # services.mpd = {
+  #   enable = true;
+  #   startWhenNeeded = true;
+  #   user = "kios";
+  #   dataDir = "/home/kios/.config/mpd";
+  #   settings = {
+  #   	db_file = "/home/kios/.config/mpd/mpd.db";
+  #   	playlist_directory = "/home/kios/.config/mpd/playlists";
+  #   	music_directory = "/mnt/server/Music";
+  #       #musicDirectory = "/mnt/server/Media/Music";
+  #     audio_output = [
+  #       {
+  #         type = "pipewire";
+  #         name = "Pipewire";
+  #       }
+  #     ];
+  #   };
+  # };
 
   # services.x2goserver.enable = true;
   networking.firewall.enable = false;
@@ -484,9 +598,13 @@
     latitude = 45.0;
   };
 
-  services.redshift = {
-    enable = true;
-  };
+  #services.redshift = {
+  #  enable = true;
+  #};
+
+  # programs.openvpn3.enable = true;
+
+  services.tailscale.enable = true;
 
   system.stateVersion = "25.05"; # Did you read the comment?
 }

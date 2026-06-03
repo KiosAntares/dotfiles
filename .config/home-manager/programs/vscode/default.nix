@@ -6,12 +6,13 @@
 }: {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
+    package = pkgs.vscode.fhs;
 
-    enableExtensionUpdateCheck = false;
-    enableUpdateCheck = false;
+    profiles.default.enableExtensionUpdateCheck = false;
+    profiles.default.enableUpdateCheck = false;
 
-    extensions = with pkgs.vscode-extensions; [
+    profiles.default.extensions = with pkgs.vscode-extensions; [
+      continue.continue
       # ms-python.python
       bbenoist.nix
       esbenp.prettier-vscode
@@ -22,7 +23,7 @@
       ms-vscode-remote.remote-ssh
       ms-vscode.hexeditor
       kamadorueda.alejandra
-      vscodevim.vim
+      # vscodevim.vim
     ];
 
     mutableExtensionsDir = true;
@@ -32,7 +33,7 @@
       # hie.enable = true;
     };
 
-    userSettings = {
+    profiles.default.userSettings = {
       "workbench.colorTheme" = "Catppuccin Mocha";
       "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'monospace', monospace";
       "editor.fontLigatures" = "'calt', 'ss19'";

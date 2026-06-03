@@ -5,7 +5,7 @@
 }:
 python3Packages.buildPythonApplication rec {
   pname = "lyrics-in-terminal";
-  version = "1.7.0";
+  version = "1.8.0";
   pyproject = true;
 
   src = fetchFromGitHub {
@@ -13,7 +13,7 @@ python3Packages.buildPythonApplication rec {
     repo = pname;
     rev = version;
     # sha256 = "61l4W7X66WHm1k/M/JM55dNj+mMh4R9ohKbByk9dIVA=";
-    hash = "sha512-aASEU7x2o4gGC7B0mSIvCjyhkOnz1mqhCp5QjLf9izrBGPKBC3+KyEt9rBtca0tyekqoeMABGgqM2ZIJUVu+AQ=="; 
+    hash = "sha512-1gO2XC42UqAF8bXU5qJQYDPWHao8JGo1HB/Yos4TjNzHWC/A2pO5Mv2MWoNP3E7T+Vq9CCfEmpXOP0ZkibsArA=="; 
   };
 
   dontUseCmakeConfigure = true;

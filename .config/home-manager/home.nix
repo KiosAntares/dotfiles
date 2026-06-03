@@ -14,6 +14,12 @@ in {
     };
   };
 
+  # nix.package = pkgs.nix;
+  nix.settings = {
+    # substituters = ["https://hyprland.cachix.org"];
+    # trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
+
 
   nixpkgs.overlays = [
       (import ./packages)
@@ -24,26 +30,41 @@ in {
     enable = true;
   };
 
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
 
   programs.home-manager.enable = true;
 
   gtk = {
-    enable = true;
-    #theme = {
-    #  package = pkgs.catppuccin-gtk;
-    #  name = "Catppuccin-Frappe-Standard-Blue-Dark";
-    # };
-  };
+     enable = true;
+     theme = {
+         name = "Catppuccin-GTK-Pink-Dark-Compact";
+         # package = pkgs.magnetic-catppuccin-gtk;
+         package = pkgs.magnetic-catppuccin-gtk.override {
+             accent = ["pink"];
+             size = "compact";
+             shade = "dark";
+             # tweaks = [ "rimless" ];
+             # variant = "mocha";
+         };
+     };
+     gtk3 = {
+         extraConfig.gtk-application-prefer-dark-theme = ''1'';
+     };
+     gtk4 = {
+         theme = config.gtk.theme;
+         extraConfig.gtk-application-prefer-dark-theme = ''1'';
+     };
+
+ };
 
   catppuccin = {
     enable = true;
     flavor = "mocha";
     zathura.enable = true;
     rofi.enable = true;
-    mpv.enable = true;
+    # mpv.enable = true;
     kitty.enable = true;
-    gtk.enable = true;
+    # gtk.enable = true;
     bat.enable = true;
   };
 
@@ -58,7 +79,7 @@ in {
     ./programs/kitty/default.nix
     ./programs/dunst/default.nix
     ./programs/i3/default.nix
-    ./programs/polybar/default.nix
+    # ./programs/polybar/default.nix
     ./programs/vscode/default.nix
     ./programs/obs/default.nix
     ./programs/mpv/default.nix
@@ -71,68 +92,103 @@ in {
     ./programs/bat/default.nix
     ./programs/rofi/default.nix
     ./programs/fastfetch/default.nix
+    ./programs/foot/default.nix
   ];
 
   # home.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  home.packages = with pkgs; [
-    # Development
-    alejandra
+  services.easyeffects = {
+     enable = true;
+  };
 
-    # Wayland utilities
-    swww
-    grimblast
-    foot
-    gamescope
-    wlogout
+  home.packages = with pkgs; [
+    # mine
+    reminder
+
+    # Testing
+    inputs.zen-browser.packages.${pkgs.system}.default
+
+    # Social
+    vesktop
+    telegram-desktop
+
+    # Dev/Tools
+    alejandra
+    arduino-ide
+    speedtest-cli
+    gotop
+    dawn
 
     # Theming and aesthetic
     catppuccin-gtk
-    papirus-icon-theme
-    breeze-gtk
-    mangohud
+    # papirus-icon-theme
+    kdePackages.breeze-gtk
     lxappearance
-    gotop
 
     # X utilities
     flameshot
     feh
     nitrogen
-    tigervnc
+    # tigervnc
 
-    #Important
-    tdesktop
-    mpv
+    # Wayland utilities
+    awww
+    grimblast
+    gamescope
+    wlogout
 
-    # General software
+    # Library
     jdk
-    jellyfin-media-player
+
+    # Media 
+    # jellyfin-media-player
+    tsukimi
+    jellyfin-mpv-shim
+    playerctl
     davis
     lyrics-in-terminal
-    libreoffice-qt
-    vesktop
-    inputs.nyaa.packages.x86_64-linux.default
-    speedtest-cli
+    # podliner
 
-    # CG
+    # Office
+    # libreoffice-qt
+    onlyoffice-desktopeditors
+    # inputs.nyaa.packages.x86_64-linux.default
+    # quodlibet
+
+    # 3D Modeling and printing
+    freecad
+    super-slicer
+
+    # 2D Drawing
     krita
     inkscape
+    darktable
 
     # Gaming and compatibility
-    heroic
-    legendary-gl
-    bottles
+    mangohud
+    umu-launcher
     wine-staging
     (pkgs.prismlauncher.override {
       # withWaylandGLFW=true;
     })
-    ferium # cli mod manager
+    legendary-gl
+    rare
+    # ferium # cli mod manager
     # osu-lazer
 
     # Emulation
-    # ryujinx
-    pcsx2
+    # pcsx2
     # rpcs3
-    dolphin-emu
+    # dolphin-emu
+    # shadps4
+    eden
+
+
+    # Other Utilities
+    # gpsprune
+    qgis
+
+    # Work
+    remmina
   ];
 }
